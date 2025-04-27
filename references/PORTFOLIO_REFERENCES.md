@@ -3,16 +3,16 @@
 ## Site Structure
 
 ### Navigation
-```jsx
-const navItems = [
-  { title: 'About', path: '/about' },
-  { title: 'Work', path: '/work' },
-  { title: 'Contact', path: '/contact' },
-  { title: 'Creative', path: '/creative' }
-];
-```
+- About
+- Work
+- Contact
+- Creative
 
 ### Sections
+- **About**: Short intro, research interests, current work
+- **Work**: Affiliations, projects, skills
+- **Contact**: CV, professional profiles (LinkedIn, GitHub, etc.)
+- **Creative**: Photography, blog, hobbies
 
 1. **About**
    - Professional summary
