@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* Light mode background (white) */
+    --foreground: 0 0% 3.9%; /* Light mode foreground (near black) */
+    /* Add accent variables for light mode */
+    --accent: 0 0% 96.1%; /* Light mode accent (light gray) */
+    --accent-foreground: 0 0% 9%; /* Light mode accent foreground (dark gray) */
+    /* Add other base variables here if needed */
+  }
+
+  .dark {
+    --background: 0 0% 3.9%; /* Dark mode background (near black) */
+    --foreground: 0 0% 98%; /* Dark mode foreground (near white) */
+    /* Add accent variables for dark mode */
+    --accent: 0 0% 14.9%; /* Dark mode accent (dark gray) */
+    --accent-foreground: 0 0% 98%; /* Dark mode accent foreground (near white) */
+  }
+
+  body {
+    /* Apply colors directly using CSS variables */
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    /* Ensure fonts are applied if needed, e.g., */
+    /* font-family: var(--font-sans), sans-serif; */
+  }
+}
+
+
