@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image'; // Optional: If you want to add a profile picture
 
 // --- TODO: Replace placeholders with your actual information ---
 const professionalSummary = `
@@ -25,8 +24,6 @@ Beyond my professional pursuits, I enjoy [mention hobbies/interests, e.g., photo
 I believe in continuous learning and [mention a core value or belief]. 
 Feel free to connect or explore my work!
 `;
-
-const profileImageUrl = "/profile-placeholder.jpg"; // Optional: Add your photo to public/
 // --------------------------------------------------------------
 
 export default function AboutPage() {
