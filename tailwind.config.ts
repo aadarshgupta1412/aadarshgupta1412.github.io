@@ -9,22 +9,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // Define semantic colors using CSS variables
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        // Add accent colors
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
-        // You can add other semantic colors here later (e.g., primary, secondary, accent)
-        // Example:
-        // primary: {
-        //   DEFAULT: "hsl(var(--primary))",
-        //   foreground: "hsl(var(--primary-foreground))",
-        // },
+        // Add other semantic colors here later if needed
       },
+      // Add other theme extensions if needed
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

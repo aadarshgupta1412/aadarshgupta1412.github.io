@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import Layout from "@/components/Layout";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aadarsh's Portfolio",
-  description: "Personal portfolio website showcasing work and projects.",
+  title: "Aadarsh Gupta - AI/ML Engineer & Researcher",
+  description: "AI/ML Engineer building intelligent systems at Thena.ai. IIT Delhi graduate working on AI agents, brain-computer interfaces, and applied machine learning.",
 };
 
 export default function RootLayout({
@@ -28,17 +27,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+          enableSystem={true}
+          disableTransitionOnChange={false}
         >
-          <Header />
-          <main className="flex-grow container mx-auto p-4">{children}</main>
-          <Footer />
+          <Layout>{children}</Layout>
         </ThemeProvider>
       </body>
     </html>

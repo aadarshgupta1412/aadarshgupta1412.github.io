@@ -1,42 +1,59 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ThemeToggle } from "./ThemeToggle";
 
+const navItems = [
+  { name: 'Work', href: '/work' },
+  { name: 'Blog', href: '/blog' },
+];
+
 const Header = () => {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      {/* Main container using flex, items-center, and justify-between */}
-      <div className="container flex h-14 max-w-screen-2xl items-center justify-between mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Navigation Links */}
-        {/* Use space-x-8 for spacing between direct children (Links) */}
-        <nav className="flex items-center space-x-8 text-sm font-medium">
-          {/* First link (Your Name) - no extra margins needed */}
-          <Link href="/" className="flex items-center space-x-2">
-            {/* TODO: Replace Your Name */}
-            <span className="font-bold">Your Name</span>
-          </Link>
-
-          {/* Subsequent links - spacing handled by parent's space-x-8 */}
-          <Link href="/about" className="transition-colors hover:text-foreground/80 text-foreground/60">
-            About
-          </Link>
-          <Link href="/work" className="transition-colors hover:text-foreground/80 text-foreground/60">
-            Work
-          </Link>
-          <Link href="/contact" className="transition-colors hover:text-foreground/80 text-foreground/60">
-            Contact
-          </Link>
-          <Link href="/creative" className="transition-colors hover:text-foreground/80 text-foreground/60">
-            Creative
-          </Link>
-        </nav>
-
-        {/* Theme Toggle Container - simple flex container */}
+    <header className="w-full py-6">
+      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
+        {/* Left side: Name/Logo (always visible, clickable on non-home pages) */}
         <div className="flex items-center">
-          <ThemeToggle />
+          {!isHomePage ? (
+            <Link 
+              href="/" 
+              className="text-lg font-semibold hover:text-muted-foreground transition-colors"
+            >
+              Aadarsh Gupta
+            </Link>
+          ) : (
+            <span className="text-lg font-semibold text-muted-foreground">
+              AG
+            </span>
+          )}
         </div>
 
+        {/* Right side: Navigation + Theme Toggle */}
+        <div className="flex items-center gap-6">
+          {!isHomePage && (
+            <nav className="flex items-center gap-6">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-sm transition-colors ${
+                    pathname === item.href
+                      ? 'text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          )}
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
