@@ -9,7 +9,7 @@ export default function BlogPage() {
           Coming Soon
         </p>
         <p className="text-muted-foreground">
-          I'm currently working on sharing my thoughts on AI/ML, research, and software engineering.
+          I&apos;m currently working on sharing my thoughts on AI/ML, research, and software engineering.
           Check back soon for updates!
         </p>
       </div>
