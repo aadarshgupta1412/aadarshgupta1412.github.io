@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* CSS Custom Properties for theming */
+  :root {
+    --background: oklch(96.12% 0 0);
+    --background-light: oklch(100% 0 0);
+    --primary: oklch(0% 0 0);
+    --accent: oklch(84.42% 0.19 202.24);
+    --error: oklch(63.17% 0.259 25.41);
+    --text: oklch(0% 0 0);
+    --text-title: oklch(0% 0 0 / 0.9);
+    --text-body: oklch(0% 0 0 / 0.75);
+    --text-light: oklch(0% 0 0 / 0.55);
+    
+    /* Font */
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    
+    /* Transitions */
+    --duration-m: 400ms;
+    --bezier: cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  .dark {
+    --background: oklch(17.76% 0 0);
+    --background-light: oklch(21.78% 0 0);
+    --primary: oklch(84.42% 0.19 202.24);
+    --accent: oklch(84.42% 0.19 202.24);
+    --error: oklch(65.91% 0.249 13.76);
+    --text: oklch(100% 0 0);
+    --text-title: oklch(100% 0 0);
+    --text-body: oklch(100% 0 0 / 0.8);
+    --text-light: oklch(100% 0 0 / 0.6);
+  }
+
+  html,
+  body {
+    @apply bg-[var(--background)] text-[var(--text-body)];
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    transition: background-color var(--duration-m) var(--bezier),
+                color var(--duration-m) var(--bezier);
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: oklch(0% 0 0);
+  }
+
+  :focus-visible {
+    outline: 4px solid var(--text);
+    outline-offset: 4px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-title);
+    font-weight: 500;
+    line-height: 1.1;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: opacity var(--duration-m) var(--bezier);
+  }
+
+  a:hover {
+    opacity: 0.8;
+  }
+
+  /* Utility classes */
+  .text-body {
+    color: var(--text-body);
+  }
+
+  .text-light {
+    color: var(--text-light);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s var(--bezier) forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s var(--bezier) forwards;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

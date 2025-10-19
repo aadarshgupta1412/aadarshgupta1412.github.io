@@ -1,7 +1,0 @@
-{
-  // Explicitly point Tailwind extension to the config file
-  "tailwindCSS.experimental.configFile": "tailwind.config.ts",
-
-  // Ignore unknown @ rules lint errors from built-in CSS validator
-  "css.lint.unknownAtRules": "ignore"
-} 
