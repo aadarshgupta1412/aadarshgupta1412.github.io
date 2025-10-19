@@ -15,43 +15,50 @@ const Header = () => {
   const isHomePage = pathname === '/';
 
   return (
-    <header className="w-full py-6">
-      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
-        {/* Left side: Name/Logo (always visible, clickable on non-home pages) */}
-        <div className="flex items-center">
-          {!isHomePage ? (
-            <Link 
-              href="/" 
-              className="text-lg font-semibold hover:text-muted-foreground transition-colors"
-            >
-              Aadarsh Gupta
-            </Link>
-          ) : (
-            <span className="text-lg font-semibold text-muted-foreground">
-              AG
-            </span>
-          )}
-        </div>
+    <header
+      className="sticky top-0 z-50 w-full backdrop-blur-md"
+      style={{
+        borderBottom: '1px solid var(--border)',
+        backgroundColor: 'color-mix(in srgb, var(--background) 80%, transparent)',
+      }}
+    >
+      <div className="container flex items-center justify-between h-20">
+        {/* Logo/Name */}
+        <Link
+          href="/"
+          className="font-semibold text-lg tracking-tight transition-colors"
+          style={{
+            color: 'var(--text-title)',
+          }}
+        >
+          {isHomePage ? 'AG' : 'Aadarsh Gupta'}
+        </Link>
 
-        {/* Right side: Navigation + Theme Toggle */}
-        <div className="flex items-center gap-6">
-          {!isHomePage && (
-            <nav className="flex items-center gap-6">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-sm transition-colors ${
+        {/* Navigation + Theme Toggle */}
+        <div className="flex items-center gap-8">
+          <nav className="flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="relative font-medium text-sm transition-colors"
+                style={{
+                  color:
                     pathname === item.href
-                      ? 'text-foreground'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-          )}
+                      ? 'var(--text-title)'
+                      : 'var(--text-light)',
+                }}
+              >
+                {item.name}
+                {pathname === item.href && (
+                  <span
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full"
+                    style={{ backgroundColor: 'var(--accent)' }}
+                  />
+                )}
+              </Link>
+            ))}
+          </nav>
           <ThemeToggle />
         </div>
       </div>
