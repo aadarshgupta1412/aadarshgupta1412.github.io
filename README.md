@@ -18,7 +18,13 @@ A modern, minimal portfolio website inspired by Hamish Williams' design philosop
 - 📱 Mobile-first responsive design
 - 🎯 SEO optimized with meta tags
 - ♿ Accessibility focused
-- 🎭 Smooth animations and transitions
+- 🎭 **Advanced animations** (see [ANIMATIONS.md](./ANIMATIONS.md) for details):
+  - 🌀 Interactive 3D displacement sphere (Three.js/WebGL)
+  - 🔤 Decoder text effect with Japanese Katakana
+  - 🔄 Rotating text disciplines animation
+  - 📜 Text reveal effects with slide bars
+  - 🖱️ Animated scroll indicators
+  - 🎬 Choreographed entrance animations
 
 ## 🛠️ Tech Stack
 
@@ -26,6 +32,7 @@ A modern, minimal portfolio website inspired by Hamish Williams' design philosop
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS + CSS Modules
 - **Animations**: Framer Motion
+- **3D Graphics**: Three.js (WebGL shaders)
 - **Deployment**: GitHub Pages
 - **Package Manager**: pnpm
 
@@ -49,22 +56,29 @@ pnpm start
 
 ```
 portfolio/
-├── app/                  # Next.js app directory
-│   ├── about/           # About page
-│   ├── projects/        # Projects showcase
-│   ├── contact/         # Contact page
-│   ├── layout.tsx       # Root layout
-│   ├── page.tsx         # Home page
-│   └── globals.css      # Global styles
-├── components/          # React components
-│   ├── Navigation.tsx   # Navigation bar
-│   ├── Footer.tsx       # Footer component
-│   └── ThemeProvider.tsx # Theme context
-├── lib/                 # Utility functions
-│   └── theme.ts         # Theme tokens
-├── public/              # Static assets
-└── references/          # Reference materials
-    └── PROFILE_INFO.md  # Professional profile data
+├── app/                      # Next.js app directory
+│   ├── about/               # About page
+│   ├── projects/            # Projects showcase
+│   ├── contact/             # Contact page
+│   ├── layout.tsx           # Root layout
+│   ├── page.tsx             # Home page
+│   └── globals.css          # Global styles
+├── components/              # React components
+│   ├── DecoderText.tsx      # Text scramble animation
+│   ├── DisplacementSphere.tsx # 3D WebGL sphere
+│   ├── RotatingText.tsx     # Cycling text animation
+│   ├── AnimatedScrollIndicator.tsx # Scroll hint
+│   ├── TextReveal.tsx       # Text reveal effects
+│   ├── HeroSection.tsx      # Enhanced hero
+│   ├── Navigation.tsx       # Navigation bar
+│   ├── Footer.tsx           # Footer component
+│   └── ThemeProvider.tsx    # Theme context
+├── lib/                     # Utility functions & data
+│   ├── data.ts              # Content data
+│   └── theme.ts             # Theme tokens
+├── public/                  # Static assets
+└── references/              # Reference materials
+    └── PROFILE_INFO.md      # Professional profile data
 ```
 
 ## 🎯 Pages

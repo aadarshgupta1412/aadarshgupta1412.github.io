@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { ClientLayout } from "@/components/ClientLayout";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,6 +13,13 @@ export const metadata: Metadata = {
     title: "Aadarsh Gupta - AI/ML Engineer & Researcher",
     description: "Portfolio showcasing AI/ML projects, research, and professional experience",
     type: "website",
+    images: [
+      {
+        url: "https://example.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
 };
 
@@ -38,9 +45,10 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ThemeProvider>
-          <Navigation />
-          <main className="pt-20">{children}</main>
-          <Footer />
+          <ClientLayout>
+            <main>{children}</main>
+            <Footer />
+          </ClientLayout>
         </ThemeProvider>
       </body>
     </html>

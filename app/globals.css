@@ -2,46 +2,132 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Global smooth transitions for theme changes */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Enhanced focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Smooth link transitions */
+a {
+  transition: color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Remove transitions on initial page load */
+.no-transition * {
+  transition: none !important;
+}
+
 @layer base {
   /* CSS Custom Properties for theming */
   :root {
+    /* Hamish-style color system using oklch */
+    --white: oklch(100% 0 0);
+    --black: oklch(0% 0 0);
     --background: oklch(96.12% 0 0);
-    --background-light: oklch(100% 0 0);
-    --primary: oklch(0% 0 0);
+    --background-light: var(--white);
+    --primary: var(--black);
     --accent: oklch(84.42% 0.19 202.24);
     --error: oklch(63.17% 0.259 25.41);
-    --text: oklch(0% 0 0);
-    --text-title: oklch(0% 0 0 / 0.9);
-    --text-body: oklch(0% 0 0 / 0.75);
-    --text-light: oklch(0% 0 0 / 0.55);
-    
+    --text: var(--black);
+    --text-title: color-mix(in lab, var(--text) 90%, transparent);
+    --text-body: color-mix(in lab, var(--text) 75%, transparent);
+    --text-light: color-mix(in lab, var(--text) 55%, transparent);
+    --surface: var(--white);
+    --border: rgba(0, 0, 0, 0.08);
     /* Font */
     --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    
     /* Transitions */
+    --duration-xs: 200ms;
+    --duration-s: 300ms;
     --duration-m: 400ms;
+    --duration-l: 600ms;
+    --duration-xl: 800ms;
     --bezier: cubic-bezier(0.4, 0.0, 0.2, 1);
   }
 
   .dark {
+    /* Hamish-style dark mode */
     --background: oklch(17.76% 0 0);
     --background-light: oklch(21.78% 0 0);
     --primary: oklch(84.42% 0.19 202.24);
     --accent: oklch(84.42% 0.19 202.24);
     --error: oklch(65.91% 0.249 13.76);
-    --text: oklch(100% 0 0);
-    --text-title: oklch(100% 0 0);
-    --text-body: oklch(100% 0 0 / 0.8);
-    --text-light: oklch(100% 0 0 / 0.6);
+    --text: var(--white);
+    --text-title: var(--text);
+    --text-body: color-mix(in lab, var(--text) 80%, transparent);
+    --text-light: color-mix(in lab, var(--text) 60%, transparent);
+    --surface: oklch(21.78% 0 0);
+    --border: rgba(255, 255, 255, 0.08);
   }
 
   html,
   body {
-    @apply bg-[var(--background)] text-[var(--text-body)];
-    font-family: var(--font-sans);
+    color: var(--text-body);
+    background: var(--background);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    opacity: 0.8;
+  }
+
+  /* Selection color */
+  ::selection {
+    background: var(--primary);
+    color: white;
+  }
+
+  ::-moz-selection {
+    background: var(--primary);
+    color: white;
   }
 
   html {
@@ -122,5 +208,36 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Sphere fade in - subtle background effect */
+  @keyframes sphereFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.7;
+    }
+  }
+
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Smooth gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
