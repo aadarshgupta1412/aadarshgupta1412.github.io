@@ -3,6 +3,7 @@ export const PERSONAL_INFO = {
   name: 'Aadarsh Gupta',
   title: 'AI/ML Engineer',
   tagline: 'Building Intelligent Systems',
+  disciplines: ['Researcher', 'System Architect', 'ML Engineer', 'Problem Solver'],
   email: 'aadarsh.iitd@gmail.com',
   phone: '+91-7879974479',
   location: 'Bangalore, India',

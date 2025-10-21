@@ -1,53 +1,88 @@
 'use client';
 
+import { useId } from 'react';
 import { useTheme } from './ThemeProvider';
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const id = useId();
+  const maskId = `${id}-theme-toggle-mask`;
 
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-lg hover:bg-[var(--background-light)] transition-colors"
+      className="fixed top-8 right-8 z-50 p-2 rounded-lg hover:opacity-80 transition-opacity"
       aria-label="Toggle theme"
+      style={{
+        color: 'var(--text-body)',
+      }}
     >
-      {theme === 'dark' ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
+      <svg
+        aria-hidden="true"
+        width="38"
+        height="38"
+        viewBox="0 0 38 38"
+        style={{
+          display: 'block',
+        }}
+      >
+        <defs>
+          <mask id={maskId}>
+            <circle
+              cx="19"
+              cy="19"
+              r="13"
+              fill="white"
+              style={{
+                transform: theme === 'dark' ? 'scale(1)' : 'scale(0.6)',
+                transformOrigin: 'center',
+                transition: 'transform var(--duration-l) var(--bezier)',
+                transitionDelay: theme === 'dark' ? '0.3s' : '0s',
+              }}
+            />
+            <circle
+              cx="25"
+              cy="14"
+              r="9"
+              fill="black"
+              style={{
+                transform: theme === 'dark' ? 'translate(0, 0)' : 'translate(100%, -100%)',
+                transition: 'transform var(--duration-l) var(--bezier)',
+                transitionDelay: theme === 'dark' ? '0.3s' : '0s',
+              }}
+            />
+          </mask>
+        </defs>
+        {/* Sun rays */}
+        <path
+          d="M19 3v7M19 35v-7M32.856 11l-6.062 3.5M5.144 27l6.062-3.5M5.144 11l6.062 3.5M32.856 27l-6.062-3.5"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="3"
           strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="5" />
-          <line x1="12" y1="1" x2="12" y2="3" />
-          <line x1="12" y1="21" x2="12" y2="23" />
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-          <line x1="1" y1="12" x2="3" y2="12" />
-          <line x1="21" y1="12" x2="23" y2="12" />
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-        </svg>
-      ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
+          strokeDasharray="7 7"
           fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
-      )}
+          style={{
+            strokeDashoffset: theme === 'dark' ? 7 : 0,
+            opacity: theme === 'dark' ? 0 : 1,
+            transition: 'stroke-dashoffset var(--duration-l) var(--bezier), opacity var(--duration-l) var(--bezier)',
+            transitionDelay: theme === 'dark' ? '0s' : '0.3s',
+          }}
+        />
+        {/* Moon/Sun circle */}
+        <circle
+          mask={`url(#${maskId})`}
+          cx="19"
+          cy="19"
+          r="12"
+          fill="currentColor"
+          style={{
+            transform: theme === 'dark' ? 'scale(1)' : 'scale(0.6)',
+            transformOrigin: 'center',
+            transition: 'transform var(--duration-l) var(--bezier)',
+            transitionDelay: theme === 'dark' ? '0.3s' : '0s',
+          }}
+        />
+      </svg>
     </button>
   );
 }
