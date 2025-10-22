@@ -119,17 +119,6 @@ a {
     opacity: 0.8;
   }
 
-  /* Selection color */
-  ::selection {
-    background: var(--primary);
-    color: white;
-  }
-
-  ::-moz-selection {
-    background: var(--primary);
-    color: white;
-  }
-
   html {
     scroll-behavior: smooth;
   }
@@ -139,9 +128,10 @@ a {
                 color var(--duration-m) var(--bezier);
   }
 
+  /* Selection color */
   ::selection {
     background: var(--accent);
-    color: oklch(0% 0 0);
+    color: var(--background);
   }
 
   :focus-visible {
