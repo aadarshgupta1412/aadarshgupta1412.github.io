@@ -23,10 +23,10 @@ export function AnimatedText({ words, className = '' }: AnimatedTextProps) {
     <AnimatePresence mode="wait">
       <motion.span
         key={words[index]}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.5, ease: 'easeInOut' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.8, ease: [0.8, 0.1, 0.27, 1] }}
         className={className}
       >
         {words[index]}

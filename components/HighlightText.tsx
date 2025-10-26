@@ -20,7 +20,7 @@ export function HighlightText({ children, delay = 0, color = 'var(--primary)' }:
         transition={{
           duration: 0.6,
           delay: delay + 0.3,
-          ease: [0.22, 1, 0.36, 1],
+          ease: [0.8, 0.1, 0.27, 1],
         }}
       />
       <motion.span

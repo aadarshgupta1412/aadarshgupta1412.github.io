@@ -18,7 +18,7 @@ export function TextReveal({ children, delay = 0, className = '' }: TextRevealPr
         transition={{
           duration: 0.8,
           delay,
-          ease: [0.22, 1, 0.36, 1],
+          ease: [0.8, 0.1, 0.27, 1],
         }}
       >
         {children}
@@ -30,7 +30,7 @@ export function TextReveal({ children, delay = 0, className = '' }: TextRevealPr
         transition={{
           duration: 0.8,
           delay,
-          ease: [0.22, 1, 0.36, 1],
+          ease: [0.8, 0.1, 0.27, 1],
         }}
       />
     </div>
@@ -44,9 +44,9 @@ export function TextRevealLine({ children, delay = 0, className = '' }: TextReve
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
-          duration: 0.6,
+          duration: 0.8,
           delay,
-          ease: [0.22, 1, 0.36, 1],
+          ease: [0.8, 0.1, 0.27, 1],
         }}
       >
         {children}

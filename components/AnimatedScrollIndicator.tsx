@@ -31,7 +31,7 @@ export function AnimatedScrollIndicator() {
         opacity: isVisible ? 1 : 0,
         y: isVisible ? 0 : -20,
       }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.6, ease: [0.8, 0.1, 0.27, 1] }}
       style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
       aria-label="Scroll to content"
     >
