@@ -62,7 +62,7 @@ export function HeroSection() {
               transition={{
                 delay: 1.2,
                 duration: 0.8,
-                ease: [0.22, 1, 0.36, 1],
+                ease: [0.8, 0.1, 0.27, 1],
               }}
               style={{ transformOrigin: 'left' }}
             />
@@ -114,7 +114,7 @@ export function HeroSection() {
               className="absolute inset-0 bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]"
               initial={{ x: '-100%' }}
               whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.6, ease: [0.8, 0.1, 0.27, 1] }}
             />
           </Link>
           <Link

@@ -51,7 +51,7 @@ export function SocialLinks() {
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 + index * 0.1, duration: 0.3 }}
+          transition={{ delay: 1.2 + index * 0.1, duration: 0.6, ease: [0.8, 0.1, 0.27, 1] }}
           aria-label={link.name}
         >
           {link.icon}
