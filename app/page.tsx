@@ -16,10 +16,10 @@ export default function Home() {
       <section className="py-32 px-6 lg:px-16">
         <div className="max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
             className="mb-20"
           >
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--text-title)] mb-4">
@@ -50,10 +50,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <motion.h2
             className="text-4xl md:text-5xl font-bold text-[var(--text-title)] text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
           >
             By the numbers
           </motion.h2>
@@ -61,10 +61,10 @@ export default function Home() {
             {STATS.map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
               >
                 <StatCard number={stat.number} label={stat.label} />
               </motion.div>
@@ -78,10 +78,10 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <motion.h2 
             className="text-4xl md:text-5xl font-medium text-[var(--text-title)] mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
           >
             Let's Work Together
           </motion.h2>
@@ -90,15 +90,15 @@ export default function Home() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
           >
             I'm always interested in hearing about new projects and opportunities.
           </motion.p>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
           >
             <Link
               href="/contact"
@@ -115,23 +115,13 @@ export default function Home() {
 
 function StatCard({ number, label }: { number: string; label: string }) {
   return (
-    <motion.div 
-      className="text-center p-6 rounded-xl bg-[var(--background-light)] border-2 border-transparent hover:border-[var(--accent)] transition-colors"
-      whileHover={{ scale: 1.05 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-    >
-      <motion.div 
-        className="text-5xl md:text-6xl font-medium text-[var(--primary)] mb-2"
-        initial={{ scale: 0.5, opacity: 0 }}
-        whileInView={{ scale: 1, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, ease: 'backOut' }}
-      >
+    <div className="text-center p-6 rounded-xl bg-[var(--background-light)] border-2 border-transparent hover:border-[var(--accent)] transition-colors">
+      <div className="text-5xl md:text-6xl font-medium text-[var(--primary)] mb-2">
         {number}
-      </motion.div>
+      </div>
       <div className="text-[var(--text-light)] text-sm md:text-base">
         {label}
       </div>
-    </motion.div>
+    </div>
   );
 }

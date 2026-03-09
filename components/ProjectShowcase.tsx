@@ -25,10 +25,10 @@ export function ProjectShowcase({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.7, ease: 'easeOut' }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5 }}
       className={`relative ${isLarge ? 'col-span-full' : ''}`}
     >
       <Link href={link} className="group block">

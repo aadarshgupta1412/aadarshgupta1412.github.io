@@ -26,12 +26,11 @@ export function AnimatedScrollIndicator() {
     <motion.button
       onClick={scrollToContent}
       className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer bg-transparent border-none"
-      initial={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0 }}
       animate={{ 
         opacity: isVisible ? 1 : 0,
-        y: isVisible ? 0 : -20,
       }}
-      transition={{ duration: 0.6, ease: [0.8, 0.1, 0.27, 1] }}
+      transition={{ duration: 0.5 }}
       style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
       aria-label="Scroll to content"
     >

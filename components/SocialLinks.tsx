@@ -36,9 +36,9 @@ export function SocialLinks() {
   return (
     <motion.div
       className="fixed left-8 bottom-8 z-50 hidden lg:flex flex-col gap-4"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1, duration: 0.5 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5, duration: 0.5 }}
     >
       {socialLinks.map((link, index) => (
         <motion.a
@@ -47,11 +47,11 @@ export function SocialLinks() {
           target="_blank"
           rel="noopener noreferrer"
           className="text-[var(--text-light)] hover:text-[var(--primary)] transition-colors"
-          whileHover={{ scale: 1.2, y: -2 }}
+          whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 + index * 0.1, duration: 0.6, ease: [0.8, 0.1, 0.27, 1] }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
           aria-label={link.name}
         >
           {link.icon}
