@@ -101,22 +101,38 @@ a {
     overflow-x: hidden;
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar - auto-hide on idle */
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--background);
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
     background: var(--accent);
-    border-radius: 5px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    opacity: 0.8;
+  /* Show scrollbar only while scrolling */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  html.is-scrolling {
+    scrollbar-color: var(--accent) transparent;
+  }
+
+  html.is-scrolling::-webkit-scrollbar-thumb {
+    background: var(--accent);
+  }
+
+  html:not(.is-scrolling)::-webkit-scrollbar-thumb {
+    background: transparent;
   }
 
   html {

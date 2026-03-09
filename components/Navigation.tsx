@@ -2,12 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
-
-const ThemeToggle = dynamic(() => import('./ThemeToggle').then(mod => ({ default: mod.ThemeToggle })), {
-  ssr: false,
-});
+import { useEffect, useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -18,79 +14,131 @@ const navItems = [
 
 export function Navigation() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
+  const toggleMenu = useCallback(() => {
+    setMobileOpen(prev => !prev);
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-[var(--background)] backdrop-blur-sm bg-opacity-95' : ''
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="text-[var(--text-title)] font-medium text-xl hover:opacity-80 transition-opacity"
-            title="Aadarsh Gupta"
-          >
-            Aadarsh Gupta
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={`text-base transition-all duration-300 relative ${
-                  pathname === item.path
-                    ? 'text-[var(--primary)]'
-                    : 'text-[var(--text-light)] hover:text-[var(--text-body)]'
-                }`}
-              >
-                {item.name}
-                {pathname === item.path && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[var(--accent)]" />
-                )}
-              </Link>
-            ))}
-            
-            {/* Theme Toggle */}
-            <ThemeToggle />
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2"
-            aria-label="Menu"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+    <>
+      {/* Mobile-only navigation bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 lg:hidden bg-[var(--background)]/95 backdrop-blur-md">
+        <div className="px-6">
+          <div className="flex items-center justify-between h-16">
+            <Link
+              href="/"
+              className="text-[var(--text-title)] font-medium text-lg hover:opacity-80 transition-opacity relative z-[60]"
+              title="Aadarsh Gupta"
             >
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          </button>
+              Aadarsh Gupta
+            </Link>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="p-2 relative z-[60] text-[var(--text-title)]"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+              onClick={toggleMenu}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <motion.line
+                  x1="3" x2="21" y1="6" y2="6"
+                  animate={mobileOpen ? { y1: 12, y2: 12, rotate: 45 } : { y1: 6, y2: 6, rotate: 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{ transformOrigin: 'center' }}
+                />
+                <motion.line
+                  x1="3" y1="12" x2="21" y2="12"
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: mobileOpen ? 0 : 1 }}
+                  transition={{ duration: 0.2 }}
+                />
+                <motion.line
+                  x1="3" x2="21" y1="18" y2="18"
+                  animate={mobileOpen ? { y1: 12, y2: 12, rotate: -45 } : { y1: 18, y2: 18, rotate: 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{ transformOrigin: 'center' }}
+                />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            className="fixed inset-0 z-40 bg-[var(--background)] lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex flex-col items-center justify-center h-full gap-8">
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item.path}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: index * 0.08, duration: 0.3 }}
+                >
+                  <Link
+                    href={item.path}
+                    onClick={() => setMobileOpen(false)}
+                    className={`text-3xl font-medium transition-colors ${
+                      pathname === item.path
+                        ? 'text-[var(--primary)]'
+                        : 'text-[var(--text-body)] hover:text-[var(--primary)]'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="pt-8"
+              >
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 border-2 border-[var(--primary)] text-[var(--primary)] rounded-xl font-medium hover:bg-[var(--primary)] hover:text-[var(--background)] transition-all"
+                >
+                  Resume
+                </a>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

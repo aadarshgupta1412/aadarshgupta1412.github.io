@@ -3,7 +3,7 @@ export const PERSONAL_INFO = {
   name: 'Aadarsh Gupta',
   title: 'AI/ML Engineer',
   tagline: 'Building Intelligent Systems',
-  disciplines: ['Researcher', 'System Architect', 'ML Engineer', 'Problem Solver'],
+  disciplines: ['AI Engineer', 'Researcher', 'System Architect', 'Neuroscience Enthusiast'],
   email: 'aadarsh.iitd@gmail.com',
   phone: '+91-7879974479',
   location: 'Bangalore, India',
@@ -13,7 +13,7 @@ export const PERSONAL_INFO = {
 } as const;
 
 // Professional Summary
-export const PROFESSIONAL_SUMMARY = `AI/ML Engineer with expertise in building production-grade intelligent systems, AI agents, and machine learning applications. Experienced in end-to-end ML pipeline development, LLM integration, and system optimization. Strong background in research with publications in healthcare ML and cognitive computing. IIT Delhi graduate with proven track record in delivering high-impact ML solutions in enterprise environments.`;
+export const PROFESSIONAL_SUMMARY = `The brain processes rich sensory streams on roughly 20 watts of power. Simulating equivalent neural activity on modern hardware would take billions. That efficiency gap is what drives my work — I build AI systems that learn from biological principles rather than just scaling compute. At Thena.ai, I architect production AI agents with feedback loops, context re-evaluation, and tool orchestration — early functional analogs of the brain's parallel processing. My research explores neurocognitive architectures for multimodal AI, bridging neural signal processing (sleep states, lucid dreaming, microsleep from EEG data) with practical intelligent systems.`;
 
 // Education
 export const EDUCATION = {
@@ -139,12 +139,11 @@ export const TEACHING_EXPERIENCE = [
 
 // Research Interests
 export const RESEARCH_INTERESTS = [
-  'AI Agents & Agentic Systems',
+  'Neurocognitive Architectures for Multimodal AI',
+  'Sensory Integration & Cross-Modal Reasoning',
+  'Memory Processing, Storage & Selective Retrieval',
+  'Neural Interpretability & Semantic Decoding',
   'Brain-Computer Interfaces',
-  'Machine Learning & Deep Learning',
-  'Computer Vision',
-  'Cognitive Computing & Neuroscience',
-  'Natural Language Processing',
   'Applied ML in Healthcare',
 ] as const;
 
@@ -285,9 +284,9 @@ export const PROJECT_CATEGORIES = ['All', 'Production AI', 'Research', 'Engineer
 // Stats for Homepage
 export const STATS = [
   { number: '85%', label: 'Latency Reduction' },
-  { number: '2+', label: 'Years Experience' },
-  { number: '1', label: 'Patent Filed' },
-  { number: '1', label: 'Publication' },
+  { number: '8+', label: 'Projects Shipped' },
+  { number: '1', label: 'US Patent Filed' },
+  { number: '1', label: 'IEEE Publication' },
 ] as const;
 
 // Featured Projects for Homepage
