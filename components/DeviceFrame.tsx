@@ -13,10 +13,10 @@ export function DeviceFrame({ children, variant = 'laptop', className = '' }: De
   if (variant === 'laptop') {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        transition={{ duration: 0.5 }}
         className={`relative ${className}`}
       >
         {/* Laptop Frame */}
@@ -38,10 +38,10 @@ export function DeviceFrame({ children, variant = 'laptop', className = '' }: De
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      transition={{ duration: 0.5 }}
       className={`relative ${className}`}
     >
       {/* Mobile Frame */}
