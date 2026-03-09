@@ -93,9 +93,9 @@ export function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.8 }}
         >
-          Building production-grade AI agents and intelligent systems at{' '}
-          <span className="text-[var(--primary)] font-medium">Thena.ai</span>. 
-          Specializing in LLM integration, agentic workflows, and end-to-end ML pipelines.
+          The brain runs on 20 watts. Modern AI needs billions for the same job.
+          I build systems that close this gap — currently architecting AI agents at{' '}
+          <span className="text-[var(--primary)] font-medium">Thena.ai</span>.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -106,7 +106,7 @@ export function HeroSection() {
           transition={{ delay: 1.4, duration: 0.8 }}
         >
           <Link
-            href="/work"
+            href="/projects"
             className="group relative px-8 py-4 bg-[var(--primary)] text-white rounded-xl font-medium overflow-hidden transition-all hover:scale-105 hover:shadow-2xl hover:shadow-[var(--primary)]/50"
           >
             <span className="relative z-10">View Projects</span>

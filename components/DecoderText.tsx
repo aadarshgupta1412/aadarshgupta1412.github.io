@@ -37,7 +37,7 @@ function shuffle(content: string[], output: CharData[], position: number): CharD
       return { type: CharType.Glyph, value: glyphs[rand] };
     }
 
-    return { type: CharType.Glyph, value: output[index].value };
+    return { type: CharType.Glyph, value: output[index]?.value ?? glyphs[Math.floor(Math.random() * glyphs.length)] };
   });
 }
 
