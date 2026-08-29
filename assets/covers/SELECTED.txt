@@ -1,0 +1,12 @@
+Winners currently used on the site (public/images/covers/):
+  traces.jpg    <- traces-v1.png   (branching teal on rag paper)
+  agents.jpg    <- agents-v1.png   (two envelopes, teal thread)
+  eeg.jpg       <- eeg-v1.png      (night water, waveform reflections)
+  surgery.jpg   <- surgery-v1.png  (circular lens, teal mist)
+  energy.jpg    <- energy-v1.png   (photovoltaic grid, teal flare)
+  eval.jpg      <- eval-v1.png     (paper stacks on a wooden balance)
+  covid.jpg     <- covid-v2.png    (index card, teal row)
+  dementia.jpg  <- dementia-v1.png (empty chair, glasses, afternoon light)
+
+All 16 variants live in this folder as {project}-v1.png / {project}-v2.png.
+Previous photoreal desk/lab covers: previous-photoreal/

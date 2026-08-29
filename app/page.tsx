@@ -23,7 +23,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-20 md:py-28 bg-[var(--background-light)]">
+      <section className="py-20 md:py-28 bg-[var(--background-light)]/70">
         <Container>
           <p className="section-kicker">Path</p>
           <h2 className="section-title">Where the work has gone</h2>

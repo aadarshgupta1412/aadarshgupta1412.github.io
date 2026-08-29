@@ -29,8 +29,8 @@ export default function AboutPage() {
         </FadeIn>
 
         <div className="flex flex-col sm:flex-row gap-8 mb-12">
-          <Link href="/photography/" className="shrink-0 w-28 h-28 rounded-full overflow-hidden border border-[var(--border)]" aria-label="Photography">
-            <img src={PERSONAL_INFO.portrait} alt="" className="w-full h-full object-cover" />
+          <Link href="/photography/" className="shrink-0 w-28 h-28 rounded-full overflow-hidden border border-[var(--border)]" aria-label="Captures">
+            <img src={PERSONAL_INFO.portrait} alt={PERSONAL_INFO.name} className="w-full h-full object-cover" />
           </Link>
           <div className="space-y-5 text-lg text-[var(--text-body)] leading-relaxed">
             {STORY.about.map((p) => (

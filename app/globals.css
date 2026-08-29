@@ -25,22 +25,29 @@ html {
   :root {
     --white: oklch(100% 0 0);
     --black: oklch(0% 0 0);
-    --background: oklch(96.4% 0.004 90);
-    --background-light: oklch(99% 0.002 90);
-    --primary: oklch(18% 0.01 250);
-    --accent: oklch(62% 0.12 202);
+    --background: oklch(94.8% 0.018 78);
+    --background-light: oklch(97.2% 0.012 78);
+    --primary: oklch(28% 0.045 205);
+    --accent: oklch(44% 0.11 198);
     --error: oklch(63.17% 0.259 25.41);
-    --text: oklch(18% 0.01 250);
-    --text-title: color-mix(in lab, var(--text) 92%, transparent);
-    --text-body: color-mix(in lab, var(--text) 72%, transparent);
-    --text-light: color-mix(in lab, var(--text) 52%, transparent);
+    --text: oklch(22% 0.02 240);
+    --text-title: color-mix(in lab, var(--text) 94%, transparent);
+    --text-body: color-mix(in lab, var(--text) 74%, transparent);
+    --text-light: color-mix(in lab, var(--text) 54%, transparent);
     --surface: var(--background-light);
-    --border: oklch(18% 0.01 250 / 0.1);
+    --border: oklch(28% 0.04 205 / 0.12);
     --duration-xs: 200ms;
     --duration-s: 300ms;
     --duration-m: 400ms;
     --duration-l: 600ms;
     --bezier: cubic-bezier(0.4, 0, 0.2, 1);
+    --atmosphere-scroll: 0;
+    --atmosphere-grain: 0.04;
+    --atmosphere-base: 0.9;
+    --atmosphere-span: 0.32;
+    --atmosphere-wash-a: 48%;
+    --atmosphere-wash-b: 22%;
+    --atmosphere-wash-warm: oklch(78% 0.07 72);
   }
 
   .dark {
@@ -55,6 +62,25 @@ html {
     --text-light: color-mix(in lab, var(--text) 55%, transparent);
     --surface: var(--background-light);
     --border: oklch(97% 0.005 90 / 0.1);
+    --atmosphere-grain: 0.05;
+    --atmosphere-wash-a: 22%;
+    --atmosphere-wash-b: 10%;
+    --atmosphere-wash-warm: oklch(72% 0.09 210);
+  }
+
+  html[data-atmosphere='home'] {
+    --atmosphere-base: 0.9;
+    --atmosphere-span: 0.32;
+  }
+
+  html.dark[data-atmosphere='home'] {
+    --atmosphere-base: 1;
+    --atmosphere-span: 0.62;
+  }
+
+  html[data-atmosphere='page'] {
+    --atmosphere-base: 0.58;
+    --atmosphere-span: 0.18;
   }
 
   html,
@@ -93,6 +119,21 @@ html {
   html.is-scrolling::-webkit-scrollbar-thumb {
     background: var(--accent);
     border-radius: 4px;
+  }
+
+  body > * {
+    transition: filter 380ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  html.lightbox-open body > *:not([role='dialog']) {
+    filter: blur(16px);
+    transform: translateZ(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.lightbox-open body > *:not([role='dialog']) {
+      filter: blur(8px);
+    }
   }
 
   html:not(.is-scrolling)::-webkit-scrollbar-thumb {
@@ -134,6 +175,30 @@ html {
 
   .section-title {
     @apply font-display text-3xl md:text-4xl font-bold text-[var(--text-title)] mb-8;
+  }
+
+  .atmosphere {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .atmosphere-grain {
+    position: absolute;
+    inset: 0;
+    opacity: var(--atmosphere-grain);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .atmosphere-wash {
+    position: absolute;
+    inset: -22%;
+    background:
+      radial-gradient(ellipse 82% 62% at 86% 0%, color-mix(in oklab, var(--accent) var(--atmosphere-wash-a), transparent), transparent 66%),
+      radial-gradient(ellipse 52% 46% at 6% 96%, color-mix(in oklab, var(--atmosphere-wash-warm, var(--accent)) var(--atmosphere-wash-b), transparent), transparent 72%);
+    opacity: calc(var(--atmosphere-base) - var(--atmosphere-scroll) * var(--atmosphere-span));
   }
 }
 
