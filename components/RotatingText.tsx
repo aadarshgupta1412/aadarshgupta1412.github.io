@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface RotatingTextProps {
@@ -17,11 +17,9 @@ export function RotatingText({
   prefix = ''
 }: RotatingTextProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const isFirstRender = useRef(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      isFirstRender.current = false;
       setCurrentIndex((prev) => (prev + 1) % texts.length);
     }, interval);
 
@@ -34,7 +32,7 @@ export function RotatingText({
       <AnimatePresence mode="wait">
         <motion.span
           key={currentIndex}
-          initial={isFirstRender.current ? false : { opacity: 0 }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{

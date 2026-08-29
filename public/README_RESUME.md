@@ -1,5 +1,6 @@
-# Resume
+# Resume & images
 
-Please add your resume PDF file here as `resume.pdf`
-
-The portfolio is configured to link to `/resume.pdf` for resume downloads.
+- `resume.pdf` — CV download (replace with a freshly compiled PDF anytime)
+- `images/identity/portrait.jpg` — circular photo on the home/about pages (click → photography)
+- `images/photography/*.jpg` — gallery frames
+- `images/covers/*.jpg` — project covers

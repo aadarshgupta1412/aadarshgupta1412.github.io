@@ -1,127 +1,84 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { FEATURED_PROJECTS, STATS } from '@/lib/data';
 import { HeroSection } from '@/components/HeroSection';
-import { ProjectShowcase } from '@/components/ProjectShowcase';
+import { StoryArc } from '@/components/StoryArc';
+import { NewsList } from '@/components/NewsList';
+import { ProjectGrid } from '@/components/ProjectGrid';
+import { FadeIn } from '@/components/FadeIn';
+import { Container } from '@/components/Container';
+import { BLOG_POSTS } from '@/lib/data';
+import { BlogMark } from '@/components/BlogMark';
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
+    <div>
       <HeroSection />
 
-      {/* Featured Work Section */}
-      <section className="py-32 px-6 lg:px-16">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-20"
-          >
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--text-title)] mb-4">
-              Featured Work
-            </h2>
-            <p className="text-xl text-[var(--text-body)] max-w-2xl">
-              A selection of projects spanning AI/ML systems, research, and production deployments
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {FEATURED_PROJECTS.map((project, index) => (
-              <ProjectShowcase
-                key={project.title}
-                title={project.title}
-                description={project.description}
-                tags={project.tags}
-                link={project.link}
-                variant="default"
-              />
-            ))}
-          </div>
-        </div>
+      <section className="py-20 md:py-28">
+        <Container>
+          <p className="section-kicker">News</p>
+          <h2 className="section-title">Lately</h2>
+          <NewsList />
+        </Container>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-32 px-6 lg:px-16 bg-gradient-to-b from-transparent via-[var(--background-light)]/50 to-transparent">
-        <div className="max-w-7xl mx-auto">
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold text-[var(--text-title)] text-center mb-16"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            By the numbers
-          </motion.h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {STATS.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <StatCard number={stat.number} label={stat.label} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      <section className="py-20 md:py-28 bg-[var(--background-light)]">
+        <Container>
+          <p className="section-kicker">Path</p>
+          <h2 className="section-title">Where the work has gone</h2>
+          <p className="text-[var(--text-body)] max-w-2xl mb-12 -mt-4">
+            IIT Delhi, a summer at Medtronic, firmware at Enphase, a year of production agents at Thena, and now agent observability at Neatlogs.
+          </p>
+          <StoryArc />
+        </Container>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-32 px-6 lg:px-16 bg-[var(--background-light)] relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h2 
-            className="text-4xl md:text-5xl font-medium text-[var(--text-title)] mb-6"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Let's Work Together
-          </motion.h2>
-          <motion.p 
-            className="text-xl text-[var(--text-body)] mb-8 leading-relaxed"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-          >
-            I'm always interested in hearing about new projects and opportunities.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            <Link
-              href="/contact"
-              className="inline-block px-8 py-4 bg-[var(--primary)] text-[var(--background)] rounded-lg font-medium hover:opacity-90 transition-opacity"
-            >
-              Get in Touch
+      <section className="py-20 md:py-28">
+        <Container>
+          <div className="flex items-end justify-between gap-4 mb-8">
+            <div>
+              <p className="section-kicker">Work</p>
+              <h2 className="section-title mb-0">Selected</h2>
+            </div>
+            <Link href="/projects/" className="text-sm text-[var(--primary)] mb-1 shrink-0">
+              All work →
             </Link>
-          </motion.div>
-        </div>
+          </div>
+          <ProjectGrid featuredOnly />
+        </Container>
       </section>
-    </div>
-  );
-}
 
-function StatCard({ number, label }: { number: string; label: string }) {
-  return (
-    <div className="text-center p-6 rounded-xl bg-[var(--background-light)] border-2 border-transparent hover:border-[var(--accent)] transition-colors">
-      <div className="text-5xl md:text-6xl font-medium text-[var(--primary)] mb-2">
-        {number}
-      </div>
-      <div className="text-[var(--text-light)] text-sm md:text-base">
-        {label}
-      </div>
+      <section className="py-20 md:py-28 border-t border-[var(--border)]">
+        <Container>
+          <div className="flex items-end justify-between gap-4 mb-8">
+            <div>
+              <p className="section-kicker">Notes</p>
+              <h2 className="section-title mb-0">Writing</h2>
+            </div>
+            <Link href="/blog/" className="text-sm text-[var(--primary)] mb-1 shrink-0">
+              All notes →
+            </Link>
+          </div>
+          <ul className="divide-y divide-[var(--border)]">
+            {BLOG_POSTS.map((post) => (
+              <li key={post.slug}>
+                <FadeIn>
+                  <Link href={`/blog/${post.slug}/`} className="flex gap-4 py-5 group">
+                    <BlogMark className="text-[var(--accent)] mt-1 shrink-0" />
+                    <div>
+                      <h3 className="font-display text-xl text-[var(--text-title)] group-hover:text-[var(--primary)]">
+                        {post.title}
+                      </h3>
+                      <p className="text-sm text-[var(--text-light)] mt-1">{post.excerpt}</p>
+                    </div>
+                  </Link>
+                </FadeIn>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
     </div>
   );
 }
