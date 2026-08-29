@@ -4,13 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ThemeToggle } from './ThemeToggle';
+import { ExternalLink } from './ExternalLink';
+import { NAV_ITEMS } from '@/lib/data';
 
-const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'Projects', path: '/projects' },
-  { name: 'About', path: '/about' },
-  { name: 'Contact', path: '/contact' },
-];
+const mobileItems = [{ name: 'Home', path: '/' }, ...NAV_ITEMS.map((i) => ({ name: i.label, path: i.href }))];
 
 export function Navigation() {
   const pathname = usePathname();
@@ -21,74 +19,51 @@ export function Navigation() {
   }, [pathname]);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
       document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
+    };
   }, [mobileOpen]);
 
   const toggleMenu = useCallback(() => {
-    setMobileOpen(prev => !prev);
+    setMobileOpen((prev) => !prev);
   }, []);
 
   return (
     <>
-      {/* Mobile-only navigation bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 lg:hidden bg-[var(--background)]/95 backdrop-blur-md">
-        <div className="px-6">
-          <div className="flex items-center justify-between h-16">
-            <Link
-              href="/"
-              className="text-[var(--text-title)] font-medium text-lg hover:opacity-80 transition-opacity relative z-[60]"
-              title="Aadarsh Gupta"
-            >
-              Aadarsh Gupta
-            </Link>
-
-            {/* Mobile Menu Button */}
+      <nav className="fixed top-0 left-0 right-0 z-50 lg:hidden bg-[var(--background)]/90 backdrop-blur-md border-b border-[var(--border)]">
+        <div className="px-4 sm:px-6 flex items-center justify-between h-14">
+          <Link href="/" className="font-display text-xl font-bold tracking-tight text-[var(--text-title)] relative z-[60]">
+            Aadarsh Gupta
+          </Link>
+          <div className="flex items-center gap-1 relative z-[60]">
+            <ThemeToggle />
             <button
-              className="p-2 relative z-[60] text-[var(--text-title)]"
+              type="button"
+              className="p-2 text-[var(--text-title)]"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
               onClick={toggleMenu}
             >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <motion.line
-                  x1="3" x2="21" y1="6" y2="6"
-                  animate={mobileOpen ? { y1: 12, y2: 12, rotate: 45 } : { y1: 6, y2: 6, rotate: 0 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ transformOrigin: 'center' }}
-                />
-                <motion.line
-                  x1="3" y1="12" x2="21" y2="12"
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: mobileOpen ? 0 : 1 }}
-                  transition={{ duration: 0.2 }}
-                />
-                <motion.line
-                  x1="3" x2="21" y1="18" y2="18"
-                  animate={mobileOpen ? { y1: 12, y2: 12, rotate: -45 } : { y1: 18, y2: 18, rotate: 0 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ transformOrigin: 'center' }}
-                />
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                {mobileOpen ? (
+                  <>
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                    <line x1="6" y1="18" x2="18" y2="6" />
+                  </>
+                ) : (
+                  <>
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                  </>
+                )}
               </svg>
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile menu overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -96,22 +71,20 @@ export function Navigation() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
           >
-            <div className="flex flex-col items-center justify-center h-full gap-8">
-              {navItems.map((item, index) => (
+            <div className="flex flex-col items-center justify-center h-full gap-6 pt-10">
+              {mobileItems.map((item, index) => (
                 <motion.div
                   key={item.path}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: index * 0.08, duration: 0.3 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: index * 0.05, duration: 0.3 }}
                 >
                   <Link
                     href={item.path}
-                    onClick={() => setMobileOpen(false)}
                     className={`text-3xl font-medium transition-colors ${
-                      pathname === item.path
+                      pathname === item.path || pathname === item.path.replace(/\/$/, '')
                         ? 'text-[var(--primary)]'
                         : 'text-[var(--text-body)] hover:text-[var(--primary)]'
                     }`}
@@ -120,21 +93,12 @@ export function Navigation() {
                   </Link>
                 </motion.div>
               ))}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="pt-8"
+              <ExternalLink
+                href="/resume.pdf"
+                className="mt-4 px-5 py-2.5 border border-[var(--primary)] text-[var(--primary)] rounded-lg text-sm font-medium hover:opacity-100"
               >
-                <a
-                  href="/resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 border-2 border-[var(--primary)] text-[var(--primary)] rounded-xl font-medium hover:bg-[var(--primary)] hover:text-[var(--background)] transition-all"
-                >
-                  Resume
-                </a>
-              </motion.div>
+                CV
+              </ExternalLink>
             </div>
           </motion.div>
         )}

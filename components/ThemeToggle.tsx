@@ -3,29 +3,19 @@
 import { useId } from 'react';
 import { useTheme } from './ThemeProvider';
 
-export function ThemeToggle() {
+export function ThemeToggle({ className = '' }: { className?: string }) {
   const { theme, toggleTheme } = useTheme();
   const id = useId();
   const maskId = `${id}-theme-toggle-mask`;
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      className="fixed top-8 right-8 z-50 p-2 rounded-lg hover:opacity-80 transition-opacity"
-      aria-label="Toggle theme"
-      style={{
-        color: 'var(--text-body)',
-      }}
+      className={`p-2 rounded-lg text-[var(--text-body)] hover:text-[var(--text-title)] ${className}`}
+      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      <svg
-        aria-hidden="true"
-        width="38"
-        height="38"
-        viewBox="0 0 38 38"
-        style={{
-          display: 'block',
-        }}
-      >
+      <svg aria-hidden width="32" height="32" viewBox="0 0 38 38" className="block">
         <defs>
           <mask id={maskId}>
             <circle
@@ -53,7 +43,6 @@ export function ThemeToggle() {
             />
           </mask>
         </defs>
-        {/* Sun rays */}
         <path
           d="M19 3v7M19 35v-7M32.856 11l-6.062 3.5M5.144 27l6.062-3.5M5.144 11l6.062 3.5M32.856 27l-6.062-3.5"
           stroke="currentColor"
@@ -68,7 +57,6 @@ export function ThemeToggle() {
             transitionDelay: theme === 'dark' ? '0s' : '0.3s',
           }}
         />
-        {/* Moon/Sun circle */}
         <circle
           mask={`url(#${maskId})`}
           cx="19"

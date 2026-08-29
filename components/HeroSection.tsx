@@ -1,130 +1,106 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { DecoderText } from './DecoderText';
-import { RotatingText } from './RotatingText';
-import { AnimatedScrollIndicator } from './AnimatedScrollIndicator';
-import { TextRevealLine } from './TextReveal';
-import { PERSONAL_INFO } from '@/lib/data';
+import { ExternalLink } from './ExternalLink';
+import { PERSONAL_INFO, STORY, SOCIAL_LINKS } from '@/lib/data';
+import { SocialIcon } from '@/lib/icons';
+import Link from 'next/link';
 
 export function HeroSection() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 lg:px-16 overflow-hidden">
-      {/* Subtle grain texture overlay */}
-      {isClient && (
-        <div 
-          className="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
+    <section className="relative min-h-[calc(100svh-3.5rem)] lg:min-h-svh flex items-center py-12 lg:py-0 overflow-hidden">
+      {ready && (
+        <div
+          className="absolute inset-0 opacity-[0.035] pointer-events-none"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
           }}
         />
       )}
 
-      {/* Content */}
-      <div className="relative z-10 max-w-6xl w-full">
-        {/* Name with Decoder Effect */}
-        <motion.div
-          className="mb-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-        >
-          <h1 className="text-sm md:text-base font-medium tracking-[0.3em] text-[var(--text-light)] uppercase">
-            <DecoderText text={PERSONAL_INFO.name} delay={300} />
-          </h1>
-        </motion.div>
+      <div className="relative z-10 w-full max-w-[1080px] 2xl:max-w-[1180px] mx-auto px-5 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(220px,280px)] gap-10 lg:gap-16 items-center">
+          <div>
+            <motion.h1
+              className="font-display text-[2.75rem] sm:text-6xl md:text-7xl xl:text-[5.25rem] font-extrabold tracking-[-0.045em] leading-[0.95] text-[var(--text-title)] mb-5"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {PERSONAL_INFO.name}
+            </motion.h1>
 
-        {/* Main Heading with Animated Line */}
-        <div className="mb-8">
-          {/* Main Title */}
-          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 mb-4">
-            <TextRevealLine delay={0.2}>
-              <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[var(--text-title)] leading-none">
-                {PERSONAL_INFO.title}
-              </h2>
-            </TextRevealLine>
-            
-            {/* Animated Horizontal Line */}
+            <motion.p
+              className="text-lg sm:text-xl md:text-2xl font-medium text-[var(--text-title)] mb-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.12, duration: 0.5 }}
+            >
+              {PERSONAL_INFO.title} at{' '}
+              <ExternalLink href={PERSONAL_INFO.affiliationUrl} className="text-[var(--primary)] hover:opacity-100">
+                {PERSONAL_INFO.affiliation}
+              </ExternalLink>
+              <span className="text-[var(--text-light)] font-normal"> · {PERSONAL_INFO.location}</span>
+            </motion.p>
+
             <motion.div
-              className="hidden md:block h-0.5 flex-grow bg-[var(--text-light)] opacity-30"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{
-                delay: 0.5,
-                duration: 0.6,
-                ease: [0.25, 0.1, 0.25, 1],
-              }}
-              style={{ transformOrigin: 'left' }}
-            />
+              className="space-y-4 text-base md:text-lg text-[var(--text-body)] max-w-xl mb-8 leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.22, duration: 0.5 }}
+            >
+              {STORY.intro.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </motion.div>
+
+            <motion.div
+              className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.35, duration: 0.5 }}
+            >
+              {SOCIAL_LINKS.map((s) => (
+                <ExternalLink
+                  key={s.name}
+                  href={s.url}
+                  className="inline-flex items-center gap-2 text-[var(--text-light)] hover:text-[var(--accent)] hover:opacity-100"
+                >
+                  <SocialIcon name={s.icon} size={16} />
+                  {s.name}
+                </ExternalLink>
+              ))}
+              <Link href="/contact/" className="inline-flex items-center gap-2 text-[var(--text-light)] hover:text-[var(--accent)]">
+                Contact
+              </Link>
+            </motion.div>
           </div>
 
-          {/* Rotating Disciplines */}
-          <motion.div 
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--text-title)] leading-none"
+          <motion.div
+            className="justify-self-center lg:justify-self-end"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.35, duration: 0.5 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
           >
-            <RotatingText
-              texts={PERSONAL_INFO.disciplines}
-              prefix="+"
-              interval={3000}
-              className="text-[var(--primary)]"
-            />
+            <Link href="/photography/" className="group block relative w-48 sm:w-56 lg:w-[240px]" aria-label="Photography">
+              <div className="absolute -inset-3 rounded-full bg-[var(--accent)]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative aspect-square rounded-full overflow-hidden border border-[var(--border)] ring-1 ring-[var(--accent)]/20">
+                <img
+                  src={PERSONAL_INFO.portrait}
+                  alt=""
+                  className="h-full w-full object-cover transition-opacity duration-500 group-hover:opacity-90"
+                />
+              </div>
+              <span className="mt-3 block text-center text-xs tracking-widest uppercase text-[var(--text-light)]">
+                Photo →
+              </span>
+            </Link>
           </motion.div>
         </div>
-
-        {/* Tagline */}
-        <TextRevealLine delay={0.5}>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-medium text-[var(--text-body)] mb-8">
-            {PERSONAL_INFO.tagline}
-          </h3>
-        </TextRevealLine>
-
-        {/* Description */}
-        <motion.p
-          className="text-lg sm:text-xl md:text-2xl text-[var(--text-body)] max-w-3xl mb-12 leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.65, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          I make AI systems that actually work in production — not just demos. 
-          Currently shipping agentic workflows at{' '}
-          <span className="text-[var(--primary)] font-medium">Thena.ai</span>, 
-          with a background in neuroscience research at IIT Delhi.
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          className="flex flex-wrap gap-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <Link
-            href="/projects"
-            className="group relative px-8 py-4 bg-[var(--primary)] text-[var(--background)] rounded-xl font-medium overflow-hidden transition-all hover:scale-105"
-          >
-            <span className="relative z-10">View Projects</span>
-          </Link>
-          <Link
-            href="/contact"
-            className="px-8 py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-xl font-medium hover:bg-[var(--primary)] hover:text-[var(--background)] transition-all hover:scale-105"
-          >
-            Get in Touch
-          </Link>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <AnimatedScrollIndicator />
       </div>
     </section>
   );

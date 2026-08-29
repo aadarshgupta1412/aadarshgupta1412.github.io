@@ -1,28 +1,284 @@
-// Personal Information
+export const SITE = {
+  url: 'https://aadarshgupta1412.github.io',
+  title: 'Aadarsh Gupta',
+  description:
+    'Founding AI Engineer at Neatlogs. Previously built production agents at Thena. IIT Delhi.',
+} as const;
+
 export const PERSONAL_INFO = {
   name: 'Aadarsh Gupta',
-  title: 'AI/ML Engineer',
-  tagline: 'Building Intelligent Systems',
-  disciplines: ['AI Engineer', 'Researcher', 'System Architect', 'Neuroscience Enthusiast'],
+  title: 'Founding AI Engineer',
+  affiliation: 'Neatlogs',
+  affiliationUrl: 'https://neatlogs.com',
   email: 'aadarsh.iitd@gmail.com',
   phone: '+91-7879974479',
   location: 'Bangalore, India',
   linkedin: 'https://linkedin.com/in/aadarshgupta1412',
   github: 'https://github.com/aadarshgupta1412',
   scholar: 'https://scholar.google.com/citations?user=lfjj5T4AAAAJ',
+  cv: '/resume.pdf',
+  portrait: '/images/identity/portrait.jpg',
 } as const;
 
-// Professional Summary
-export const PROFESSIONAL_SUMMARY = `The brain processes rich sensory streams on roughly 20 watts of power. Simulating equivalent neural activity on modern hardware would take billions. That efficiency gap is what drives my work — I build AI systems that learn from biological principles rather than just scaling compute. At Thena.ai, I architect production AI agents with feedback loops, context re-evaluation, and tool orchestration — early functional analogs of the brain's parallel processing. My research explores neurocognitive architectures for multimodal AI, bridging neural signal processing (sleep states, lucid dreaming, microsleep from EEG data) with practical intelligent systems.`;
+export const STORY = {
+  intro: [
+    'I work on observability for AI agents: finding failures in traces, searching across runs, and scoring those runs so a person can see the evidence.',
+    'Before Neatlogs I spent a year at Thena building the AI layer for B2B support — chat agents, a copilot, AI logs, and an MCP server. I studied electrical engineering at IIT Delhi, with a minor in Cognitive & Intelligent Systems.',
+  ],
+  about: [
+    'At Neatlogs I build the systems that sit on top of agent traces. That means a detection pipeline (a QLoRA-finetuned LLaMA 3.1 model on about 16K labeled samples, 0.83–0.91 F1, served on Azure ML and SageMaker), hybrid BM25 + vector search on ClickHouse, and agents that can walk a trace and draft an eval from context.',
+    'In 2025 I was at Thena, where I shipped production agents for a B2B CRM: entity-aware memory, RAG, tool use, and workflows that had to stay idempotent under concurrent ticket load. Chat latency dropped 85%; workflow time dropped 66%. The public product writeups below describe the features I worked on — I did not write those posts.',
+    'Earlier: firmware and control-system tooling at Enphase, an LLM-as-judge fellowship at Pi School, and a summer at Medtronic on laparoscopic video masking (US patent application) plus tracking for HUGO RAS. My B.Tech thesis, with Prof. Saurabh Gandhi at CSND Lab, was sleep-stage, lucid-dream, and microsleep classification from EEG.',
+  ],
+} as const;
 
-// Education
+/** Product posts about features I built. I did not author these articles. */
+export const THENA_PRODUCTS = [
+  {
+    title: 'AI Logs',
+    blurb: 'Per-ticket audit of every agent action, with a reasoning trail.',
+    url: 'https://www.thena.ai/post/ai-logs-for-transparent-customer-support',
+  },
+  {
+    title: 'AI web chat',
+    blurb: 'Always-on site widget grounded in a knowledge base, with human handoff.',
+    url: 'https://www.thena.ai/post/thena-ai-web-chat-smart-24-7-engagement-for-your-website',
+  },
+  {
+    title: 'AI copilot',
+    blurb: 'Account context, draft replies, and tool calls inside the support workspace.',
+    url: 'https://www.thena.ai/post/ai-copilot-b2b-customer-support',
+  },
+  {
+    title: 'Auto-responder',
+    blurb: 'Channel-aware, branded replies for holidays, after-hours, and unavailability.',
+    url: 'https://www.thena.ai/post/thena-auto-responder-for-multichannel-support',
+  },
+  {
+    title: 'Agentic chat',
+    blurb: 'Chat agent with tools, retrieval, and a clean path to a human.',
+    url: 'https://www.thena.ai/post/agentic-ai-chat-agents',
+  },
+  {
+    title: 'MCP · Claude',
+    blurb: 'Thena data and actions inside Claude via MCP.',
+    url: 'https://www.thena.ai/post/customer-support-data-in-claude-ai',
+  },
+  {
+    title: 'MCP · Raycast',
+    blurb: 'Tickets and status changes from the Raycast command bar.',
+    url: 'https://www.thena.ai/post/customer-support-tickets-now-in-raycast-that-easy-with-thena',
+  },
+] as const;
+
+export const RESEARCH_INTERESTS = [
+  'Agent observability and evaluation',
+  'Production LLM systems',
+  'Computer vision',
+  'Sleep EEG / brain states',
+  'Applied ML in healthcare',
+] as const;
+
+export type NewsItem = {
+  date: string;
+  text: string;
+  href?: string;
+};
+
+export const NEWS: NewsItem[] = [
+  {
+    date: '01/2026',
+    text: 'Joined Neatlogs as Founding AI Engineer.',
+    href: 'https://neatlogs.com',
+  },
+  {
+    date: '01/2026',
+    text: 'Left Thena after a year on production agents, copilots, AI logs, and MCP.',
+    href: 'https://thena.ai',
+  },
+  {
+    date: '07/2023',
+    text: 'Joined Enphase Energy as a System Software Engineer.',
+  },
+  {
+    date: '05/2023',
+    text: 'Graduated IIT Delhi (B.Tech EE; minor in Cognitive & Intelligent Systems).',
+  },
+  {
+    date: '03/2023',
+    text: 'Selected as 1 of 10 AI Fellows at Pi School, Italy.',
+    href: 'https://picampus-school.com/programme/school-of-artificial-intelligence/',
+  },
+  {
+    date: '2023',
+    text: 'Awarded the Singapore International Pre-Graduate Award (IHPC, A*STAR).',
+  },
+  {
+    date: '2022',
+    text: 'US patent application filed with Medtronic on laparoscopic surgical vision.',
+  },
+  {
+    date: '12/2022',
+    text: 'Paper presented at IEEE INDICON 2022.',
+    href: 'https://ieeexplore.ieee.org/document/10040129/',
+  },
+];
+
+export const ARC = [
+  {
+    year: '2019–23',
+    title: 'IIT Delhi',
+    place: 'B.Tech EE',
+    note: 'Minor in cognitive systems. Thesis on sleep EEG with Prof. Saurabh Gandhi.',
+  },
+  {
+    year: '2022',
+    title: 'Medtronic',
+    place: 'Internship',
+    note: 'Laparoscopic video masking (patent filed) and HUGO RAS tracking.',
+  },
+  {
+    year: '2023–24',
+    title: 'Enphase',
+    place: 'Systems',
+    note: 'Firmware correction analysis and control-system curve fitting.',
+  },
+  {
+    year: '2025',
+    title: 'Thena',
+    place: 'AI / ML',
+    note: 'Production agents, copilots, AI logs, MCP. Chat latency down 85%.',
+  },
+  {
+    year: '2026',
+    title: 'Neatlogs',
+    place: 'Founding',
+    note: 'Detections, search, and evaluations over agent traces.',
+  },
+] as const;
+
+export type ExperienceLink = { text: string; url: string };
+
+export type ExperienceItem = {
+  id: string;
+  company: string;
+  companyUrl?: string;
+  role: string;
+  period: string;
+  location: string;
+  mark: string;
+  summary: string;
+  highlights: string[];
+  tags: string[];
+  linksNote?: string;
+  links?: ExperienceLink[];
+};
+
+export const EXPERIENCE: ExperienceItem[] = [
+  {
+    id: 'neatlogs',
+    company: 'Neatlogs',
+    companyUrl: 'https://neatlogs.com',
+    role: 'Founding AI Engineer',
+    period: 'Jan 2026 – Present',
+    location: 'Bangalore',
+    mark: 'NL',
+    summary:
+      'Observability for AI agents: detections on traces, search across runs, and evals a reviewer can inspect.',
+    highlights: [
+      'Multi-label detection on agent traces with QLoRA-finetuned LLaMA 3.1 (8B), ~16K curated samples, MLflow on A100s, 0.83–0.91 F1. Served on Azure ML and SageMaker with blue-green rollout and latency SLOs.',
+      'Event-driven FastAPI services on AWS App Runner with Kafka consumers — ML, regex, conditional, and Presidio PII detectors, with batching and graceful degradation.',
+      'Search and interpretability agents over traces (FSM streaming parser, adaptive model routing, sub-2s TTFT). Hybrid BM25 + vector retrieval with RRF on ClickHouse (HNSW); six embedding models × four dimensions for recall vs latency.',
+      'Prompt-template reverse-engineering with FastCDC, Merkle structural diffs, and anchor matching — >90% precision, sub-50ms extract.',
+    ],
+    tags: ['QLoRA', 'LLaMA', 'FastAPI', 'Kafka', 'ClickHouse', 'Azure ML', 'SageMaker'],
+  },
+  {
+    id: 'thena',
+    company: 'Thena.ai',
+    companyUrl: 'https://thena.ai',
+    role: 'Software Engineer AI/ML II',
+    period: 'Jan 2025 – Jan 2026',
+    location: 'Bangalore',
+    mark: 'TH',
+    summary:
+      'Production AI for B2B support: agents, copilots, logs, and an MCP server on top of the CRM.',
+    highlights: [
+      'Shipped an agentic chat interface with entity-aware memory and RAG in under three months, then the surrounding CRM workflows (ticket deflection, summarization, platform actions) with idempotency and supersession under concurrent load.',
+      'Cut chat latency 85% and workflow time 66% with caching, checkpointing, and queued retrieval.',
+      'Tooling around the agents: MCP server, federated retrieval, web search, NL2SQL, charting, Thena API connectors, evals, guardrails, GitHub Actions, and Sentry.',
+    ],
+    tags: ['LangGraph', 'RAG', 'MCP', 'FastAPI', 'PostgreSQL', 'Redis'],
+    linksNote: 'Product posts about features I built. I did not write these articles.',
+    links: THENA_PRODUCTS.map((p) => ({ text: p.title, url: p.url })),
+  },
+  {
+    id: 'enphase',
+    company: 'Enphase Energy',
+    companyUrl: 'https://enphase.com',
+    role: 'System Software Engineer',
+    period: 'Jul 2023 – Dec 2024',
+    location: 'Bangalore',
+    mark: 'EN',
+    summary: 'Firmware analysis and control-system estimation for energy hardware.',
+    highlights: [
+      'Python parsers for firmware correction analysis — 15% better simulated power performance.',
+      'SciPy curve-fitting for control parameters; a test framework that cut run time 20%.',
+    ],
+    tags: ['Python', 'SciPy', 'Control systems'],
+  },
+  {
+    id: 'pischool',
+    company: 'Pi School',
+    companyUrl: 'https://picampus-school.com/programme/school-of-artificial-intelligence/',
+    role: 'AI Fellow',
+    period: 'Mar 2023 – May 2023',
+    location: 'Remote',
+    mark: 'PI',
+    summary: 'LLM-as-judge for business chatbots. One of ten fellows.',
+    highlights: [
+      'Evaluation system that writes human-like feedback for chatbot replies.',
+      'Workshop on prompt engineering; materials are public.',
+    ],
+    tags: ['LLMs', 'Eval', 'NLP'],
+    links: [
+      { text: 'Code', url: 'https://github.com/aadarshgupta1412/pischool-generative-model/' },
+      { text: 'Workshop', url: 'https://github.com/aadarshgupta1412/pischool-prompt-guide/' },
+      { text: 'Talk', url: 'https://picampus-school.com/pitch-day-pischool-of-ai-session-12/' },
+    ],
+  },
+  {
+    id: 'medtronic',
+    company: 'Medtronic',
+    companyUrl: 'https://www.medtronic.com',
+    role: 'Summer Intern',
+    period: 'Jun 2022 – Aug 2022',
+    location: 'Hyderabad',
+    mark: 'MD',
+    summary: 'Vision for HUGO RAS. US patent application filed.',
+    highlights: [
+      'Automated masking of laparoscopic surgical video.',
+      'Real-time tracking and collision avoidance for the robotic arms.',
+    ],
+    tags: ['Computer vision', 'Robotics'],
+    links: [
+      { text: 'Report', url: 'https://github.com/aadarshgupta1412/Medtronic_internship/' },
+      {
+        text: 'LoR',
+        url: 'https://drive.google.com/file/d/1K6I-O4OPIWpBWJfTDMUIqwAMENpbCahA/view?usp=sharing',
+      },
+    ],
+  },
+];
+
 export const EDUCATION = {
-  institution: 'Indian Institute of Technology (IIT), Delhi',
-  degree: 'Bachelor of Technology in Electrical Engineering',
-  period: '2019 – 2023',
-  gpa: '8.0/10',
+  institution: 'Indian Institute of Technology Delhi',
+  institutionUrl: 'https://home.iitd.ac.in',
+  degree: 'B.Tech, Electrical Engineering',
   minor: 'Cognitive & Intelligent Systems',
-  relevantCourses: [
+  period: '2019 – 2023',
+  gpa: '8.0 / 10',
+  courses: [
     'Data Structures and Algorithms',
     'Machine Intelligence & Learning',
     'Computer Vision',
@@ -31,322 +287,430 @@ export const EDUCATION = {
   ],
 } as const;
 
-// Professional Experience
-export const EXPERIENCE = [
-  {
-    company: 'Thena.ai',
-    role: 'Software Engineer AI/ML - II',
-    period: 'January 2025 - Present',
-    location: 'Bangalore, India',
-    description: 'Building production-grade AI agents and agentic workflows for B2B CRM platform.',
-    highlights: [
-      'Designed and shipped production-grade AI agents for Thena\'s B2B CRM platform, integrating entity-aware memory and retrieval-augmented knowledge to enable context-driven, agentic chat interface in under 3 months',
-      'Architected AI-driven CRM workflows automating ticket deflection, dynamic ticket summarization, and platform actions with idempotency and supersession safeguards for reliable execution during concurrent high-volume customer interactions',
-      'Engineered performance optimizations with caching and state checkpointing, achieving 85% reduction in chat latency & 66% faster workflow executions and enhanced RAG pipeline with queued background processing for high-throughput retrieval',
-      'Developed modular AI toolchain including MCP server integration, federated knowledge retrieval, web search integration, NL2SQL generation, dynamic chart generation, and Thena API connectors to expand agent capabilities',
-      'Built end-to-end feedback pipeline and guardrails with observability frameworks for real-time LLM output monitoring and evaluations',
-      'Implemented distributed testing pipeline with GitHub Actions to safeguard code quality across agent APIs and monitoring of production failures with Sentry to gain visibility of agent performance',
-    ],
-  },
-  {
-    company: 'Enphase Energy',
-    role: 'System Software Engineer',
-    period: 'July 2023 - December 2024',
-    location: 'Bangalore, India',
-    description: 'Developed optimization tools for firmware analysis and control systems.',
-    highlights: [
-      'Developed Python-based parsers for firmware correction analysis, improving simulated power performance by 15%',
-      'Deployed SciPy-based optimization scripts for control system parameter estimation through time series curve fitting',
-      'Implemented visualization scripts for simulation analysis; designed Python test frameworks reducing test duration by 20%',
-    ],
-  },
-  {
-    company: 'Pi School',
-    role: 'AI Fellow',
-    period: 'March 2023 - May 2023',
-    location: 'Remote',
-    description: 'Developed LLM-based chatbot evaluation system and presented at workshops.',
-    highlights: [
-      'Developed an LLM-based chatbot evaluation system that emulates human assessment for feedback generation',
-      'Integrated assessment generation with business chatbot websites; Presented findings at a prompt engineering workshop',
-    ],
-    links: [
-      { text: 'Code', url: 'https://github.com/aadarshgupta1412/pischool-generative-model/' },
-      { text: 'Workshop', url: 'https://github.com/aadarshgupta1412/pischool-prompt-guide/' },
-      { text: 'Presentation', url: 'https://picampus-school.com/pitch-day-pischool-of-ai-session-12/' },
-    ],
-  },
-  {
-    company: 'Medtronic',
-    role: 'Summer Intern',
-    period: 'June 2022 - August 2022',
-    location: 'Hyderabad, India',
-    description: 'Worked on vision systems for HUGO RAS surgical robotic arms.',
-    highlights: [
-      'Devised a novel vision mechanism for automated masking of laparoscopic surgical video (US Patent filed)',
-      'Worked on real-time localized tracking system for HUGO RAS surgical robotic arms & collision-avoidance algorithms',
-    ],
-    links: [
-      { text: 'Report', url: 'https://github.com/aadarshgupta1412/Medtronic_internship/' },
-    ],
-  },
-] as const;
+export const SKILLS: Record<string, string[]> = {
+  Languages: ['Python', 'TypeScript', 'SQL', 'C/C++'],
+  'ML / AI': ['PyTorch', 'Transformers', 'PEFT', 'QLoRA', 'MLflow', 'LangGraph'],
+  Systems: ['FastAPI', 'Kafka', 'PostgreSQL', 'ClickHouse', 'Redis', 'Next.js'],
+  Cloud: ['AWS SageMaker', 'AWS App Runner', 'Azure ML', 'GCP Vertex', 'Docker'],
+};
 
-// Skills
-export const SKILLS = {
-  'Languages & Frameworks': ['Python', 'FastAPI', 'SQL', 'C/C++', 'Next.js', 'TypeScript', 'React', 'MATLAB'],
-  'AI/ML Libraries': ['LangChain', 'LangGraph', 'PyTorch', 'TensorFlow', 'Pandas', 'Shadcn UI'],
-  'DevOps & Monitoring': ['Redis', 'PostgreSQL', 'Git', 'AWS (EC2, Cloudwatch)', 'Portkey', 'Sentry', 'Docker', 'Grafana', 'Exa API', 'Firecrawl', 'Postman', 'Cursor'],
-  'Specializations': ['AI Agents & Agentic Systems', 'LLM Integration', 'RAG Systems', 'Computer Vision', 'Signal Processing', 'NL2SQL'],
-} as const;
+export type AwardItem = {
+  title: string;
+  detail: string;
+  year: string;
+  group: 'fellowship' | 'scholastic';
+  href?: string;
+};
 
-// Awards
-export const AWARDS = [
-  'AI Fellowship (2023) - Selected as 1 of 10 fellows and awarded scholarship for Pi School of AI, Italy',
-  'Singapore International Pre-Graduate Award (2023) - Selected as a visiting research scholar at IHPC, A*STAR',
-  'Project Fellowship (2022) - Granted scholarship by IHFC for project mentored by Addverb Technologies',
-  'JEE Advanced (2019) - Secured All India Rank 467 among 2,30,000 shortlisted candidates',
-  'JEE Mains (2019) - Secured All India Rank 498 among 1.2M candidates; obtained 99.963 percentile',
-  'KVPY Fellow (2018) - Awarded fellowship by Dept. of Science & Technology, Govt. of India and IISc Bangalore',
-  'INChO (2018) - Awarded Certificate of Merit by IACT for securing top 1% position in NSEC',
-  'NTSE (2017) - Awarded national scholarship and Certificate of Merit by NCERT, Govt. of India',
-] as const;
+export const AWARDS: AwardItem[] = [
+  {
+    title: 'AI Fellowship, Pi School',
+    detail: '1 of 10 fellows. Scholarship, School of AI, Italy.',
+    year: '2023',
+    group: 'fellowship',
+    href: 'https://picampus-school.com/programme/school-of-artificial-intelligence/',
+  },
+  {
+    title: 'Singapore International Pre-Graduate Award',
+    detail: 'Visiting research scholar selection, IHPC, A*STAR.',
+    year: '2023',
+    group: 'fellowship',
+  },
+  {
+    title: 'IHFC Project Fellowship',
+    detail: 'Scholarship for a project mentored by Addverb Technologies.',
+    year: '2022',
+    group: 'fellowship',
+    href: 'https://www.ihfc.co.in/',
+  },
+  {
+    title: 'KVPY Fellow',
+    detail: 'DST, Govt. of India and IISc Bangalore.',
+    year: '2018',
+    group: 'scholastic',
+  },
+  {
+    title: 'NTSE',
+    detail: 'National scholarship, NCERT.',
+    year: '2017',
+    group: 'scholastic',
+  },
+  {
+    title: 'INChO / NSEC',
+    detail: 'Certificate of Merit, top 1%.',
+    year: '2018',
+    group: 'scholastic',
+  },
+  {
+    title: 'JEE Advanced',
+    detail: 'AIR 467 / ~230,000 shortlisted.',
+    year: '2019',
+    group: 'scholastic',
+  },
+  {
+    title: 'JEE Mains',
+    detail: 'AIR 498 / 1.2M. 99.963 percentile.',
+    year: '2019',
+    group: 'scholastic',
+  },
+];
 
-// Teaching Experience
-export const TEACHING_EXPERIENCE = [
+export const TEACHING = [
   {
     role: 'Teaching Assistant',
     course: 'ELL457: Computation and Cognition',
-    period: 'January 2023 - May 2023',
-    institution: 'IIT Delhi',
-    description: 'TA for Prof. Sumeet Agarwal, covering topics in Cognition & Deep Learning. Assisted in creating resources and evaluation materials for 80+ students.',
+    with: 'Prof. Sumeet Agarwal',
+    withUrl: 'https://web.iitd.ac.in/~sumeet/',
+    period: 'Jan 2023 – May 2023',
+    note: 'Cognition and deep learning. Resources and eval for 80+ students.',
   },
   {
     role: 'Teaching Assistant',
     course: 'ELL409: Machine Intelligence & Learning',
-    period: 'August 2022 - December 2022',
-    institution: 'IIT Delhi',
-    description: 'TA for Prof. Brejesh Lall, covering topics in Machine Learning & Computer Vision. Created quizzes, study material and question banks for 120+ students.',
+    with: 'Prof. Brejesh Lall',
+    withUrl: 'https://web.iitd.ac.in/~brejesh/',
+    period: 'Aug 2022 – Dec 2022',
+    note: 'ML and computer vision. Quizzes and question banks for 120+ students.',
   },
   {
     role: 'Mentor',
     course: 'CML101: Introduction to Chemistry',
-    period: 'March 2021 - June 2021',
-    institution: 'IIT Delhi',
-    description: 'Mentored a group of 30 students, conducting regular teaching sessions and creating reference notes.',
+    with: 'IIT Delhi',
+    period: 'Mar 2021 – Jun 2021',
+    note: 'Weekly sessions and notes for a group of 30.',
   },
 ] as const;
 
-// Research Interests
-export const RESEARCH_INTERESTS = [
-  'Neurocognitive Architectures for Multimodal AI',
-  'Sensory Integration & Cross-Modal Reasoning',
-  'Memory Processing, Storage & Selective Retrieval',
-  'Neural Interpretability & Semantic Decoding',
-  'Brain-Computer Interfaces',
-  'Applied ML in Healthcare',
+export const PUBLICATIONS = [
+  {
+    id: 'p1',
+    kind: 'patent' as const,
+    title: 'Surgical Robotic System with Laparoscopic System',
+    venue: 'US Patent Application · Medtronic Inc.',
+    year: '2022',
+    authors: ['K V S Manoj Kumar Vadali', 'Sai Gautham Ravipati', 'Aadarsh Gupta'],
+    links: [
+      { text: 'Report', url: 'https://github.com/aadarshgupta1412/Medtronic_internship/' },
+      {
+        text: 'LoR',
+        url: 'https://drive.google.com/file/d/1K6I-O4OPIWpBWJfTDMUIqwAMENpbCahA/view?usp=sharing',
+      },
+    ] as { text: string; url: string }[],
+  },
+  {
+    id: 'c1',
+    kind: 'paper' as const,
+    title:
+      'Text based diagnosis of COVID-19 using Data mining techniques: A comparative study',
+    venue: 'IEEE INDICON',
+    year: '2022',
+    authors: ['Aadarsh Gupta*', 'Aastha Valecha*', 'Sapna Mishra', 'Tapan Gandhi'],
+    note: '* Equal contribution',
+    links: [
+      { text: 'Paper', url: 'https://ieeexplore.ieee.org/document/10040129/' },
+      { text: 'Code', url: 'https://github.com/aadarshgupta1412/covid-symptoms-classification/' },
+      {
+        text: 'Slides',
+        url: 'https://drive.google.com/file/d/1uzPiXztPDv-8mYI5ayAbPW8zjBweFH2B/view?usp=share_link',
+      },
+    ],
+  },
+];
+
+export const PROJECT_CATEGORIES = [
+  'All',
+  'Agents',
+  'Research',
+  'Systems',
+  'Healthcare',
 ] as const;
 
-// Projects
-export const PROJECTS = [
+export type ProjectCategory = (typeof PROJECT_CATEGORIES)[number];
+
+export type Project = {
+  id: string;
+  title: string;
+  period: string;
+  blurb: string;
+  image: string;
+  category: Exclude<ProjectCategory, 'All'>;
+  tags: string[];
+  featured?: boolean;
+  links?: { text: string; url: string }[];
+};
+
+export const PROJECTS: Project[] = [
   {
-    id: 'thena',
-    title: 'AI-Driven CRM Workflows at Thena.ai',
-    period: 'January 2025 - Present',
-    description: 'Designed and shipped production-grade AI agents for Thena\'s B2B CRM platform with entity-aware memory and retrieval-augmented knowledge.',
-    highlights: [
-      'Architected AI-driven CRM workflows with idempotency and supersession safeguards',
-      'Achieved 85% reduction in chat latency & 66% faster workflow executions',
-      'Built modular AI toolchain including MCP server, NL2SQL generation, and dynamic chart generation',
-      'Implemented distributed testing pipeline and production monitoring with Sentry',
+    id: 'traces',
+    title: 'Agent traces at Neatlogs',
+    period: '2026',
+    blurb:
+      'Detections, hybrid search, and interpretability agents over production traces.',
+    image: '/images/covers/traces.jpg',
+    category: 'Agents',
+    tags: ['QLoRA', 'ClickHouse', 'Kafka', 'FastAPI'],
+    featured: true,
+    links: [{ text: 'Neatlogs', url: 'https://neatlogs.com' }],
+  },
+  {
+    id: 'thena-agents',
+    title: 'Agents at Thena',
+    period: '2025',
+    blurb:
+      'Chat agents, copilots, AI logs, and MCP for B2B support. Shipped in the first three months, then the rest of the AI surface.',
+    image: '/images/covers/agents.jpg',
+    category: 'Agents',
+    tags: ['LangGraph', 'RAG', 'MCP'],
+    featured: true,
+    links: [
+      { text: 'AI Logs', url: 'https://www.thena.ai/post/ai-logs-for-transparent-customer-support' },
+      { text: 'Web chat', url: 'https://www.thena.ai/post/thena-ai-web-chat-smart-24-7-engagement-for-your-website' },
+      { text: 'Copilot', url: 'https://www.thena.ai/post/ai-copilot-b2b-customer-support' },
+      { text: 'Auto-responder', url: 'https://www.thena.ai/post/thena-auto-responder-for-multichannel-support' },
+      { text: 'MCP', url: 'https://www.thena.ai/post/customer-support-data-in-claude-ai' },
     ],
-    technologies: ['LangGraph', 'FastAPI', 'Python', 'RAG', 'MCP', 'PostgreSQL', 'Redis', 'Sentry'],
-    category: 'Production AI',
   },
   {
     id: 'brain-states',
-    title: 'Characterizing Brain States using Deep Learning',
-    period: 'August 2022 - May 2023',
-    description: 'Developed classification strategies for sleep stages from polysomnographic data using deep learning techniques.',
-    highlights: [
-      'Classification of sleep stages from EEG, EOG, and EMG signals',
-      'Detection and classification of lucid dream states',
-      'Microsleep event detection using neural signal processing',
-      'Published Bachelor\'s Thesis with Prof. Saurabh Gandhi at CSND Lab, IIT Delhi',
-    ],
-    technologies: ['PyTorch', 'TensorFlow', 'Signal Processing', 'Python', 'Deep Learning'],
+    title: 'Characterizing brain states',
+    period: '2022–23',
+    blurb:
+      'Sleep stages, lucid dreaming, and microsleep from polysomnography. B.Tech thesis, CSND Lab, Prof. Saurabh Gandhi.',
+    image: '/images/covers/eeg.jpg',
     category: 'Research',
+    tags: ['EEG', 'PyTorch'],
+    featured: true,
     links: [
-      { text: 'Thesis', url: 'https://drive.google.com/file/d/18Okc9WLLyHJkzXcqNayY5lLpSSfAILBD/view' },
-      { text: 'Slides', url: 'https://drive.google.com/file/d/1hWRyexxCHhPFrs9_Ty6T683C5selSqQs/view' },
+      {
+        text: 'Thesis',
+        url: 'https://drive.google.com/file/d/18Okc9WLLyHJkzXcqNayY5lLpSSfAILBD/view?usp=sharing',
+      },
+      {
+        text: 'Slides',
+        url: 'https://drive.google.com/file/d/1hWRyexxCHhPFrs9_Ty6T683C5selSqQs/view?usp=sharing',
+      },
+      { text: 'Lab', url: 'https://web.iitd.ac.in/~gsaurabhr/team/' },
+      { text: 'Advisor', url: 'https://sites.google.com/view/gsaurabhr' },
+    ],
+  },
+  {
+    id: 'medtronic-vision',
+    title: 'Surgical video masking',
+    period: '2022',
+    blurb:
+      'Automated masking of laparoscopic video for HUGO RAS. US patent application, Medtronic.',
+    image: '/images/covers/surgery.jpg',
+    category: 'Healthcare',
+    tags: ['Computer vision', 'Robotics'],
+    featured: true,
+    links: [
+      { text: 'Report', url: 'https://github.com/aadarshgupta1412/Medtronic_internship/' },
+      {
+        text: 'LoR',
+        url: 'https://drive.google.com/file/d/1K6I-O4OPIWpBWJfTDMUIqwAMENpbCahA/view?usp=sharing',
+      },
+    ],
+  },
+  {
+    id: 'enphase-firmware',
+    title: 'Firmware correction analysis',
+    period: '2023–24',
+    blurb: 'Parsers and curve-fitting for Enphase energy systems.',
+    image: '/images/covers/energy.jpg',
+    category: 'Systems',
+    tags: ['Python', 'SciPy'],
+  },
+  {
+    id: 'pischool-eval',
+    title: 'LLM-as-judge for chatbots',
+    period: '2023',
+    blurb: 'Pi School fellowship: evaluation that writes feedback for business chatbots.',
+    image: '/images/covers/eval.jpg',
+    category: 'Agents',
+    tags: ['LLMs', 'Eval'],
+    links: [
+      { text: 'Code', url: 'https://github.com/aadarshgupta1412/pischool-generative-model/' },
+      { text: 'Workshop', url: 'https://github.com/aadarshgupta1412/pischool-prompt-guide/' },
+      { text: 'Talk', url: 'https://picampus-school.com/pitch-day-pischool-of-ai-session-12/' },
     ],
   },
   {
     id: 'covid',
-    title: 'COVID-19 Diagnostics using Machine Learning',
-    period: 'October 2021 - June 2022',
-    description: 'Developed low-resource detection techniques for COVID-19 from public datasets with feature correlation analysis.',
-    highlights: [
-      'Achieved 93.36% accuracy using feature reduction for supervised classifiers',
-      'Presented at IEEE INDICON 2022',
-      'Published in IEEE 19th India Council International Conference',
-    ],
-    technologies: ['Machine Learning', 'Python', 'Scikit-learn', 'Data Mining'],
-    category: 'Research',
+    title: 'Text-based COVID diagnosis',
+    period: '2021–22',
+    blurb:
+      'Low-resource classifiers from public symptom data. 93.36% with feature reduction. INDICON 2022. Equal contribution with Aastha Valecha; advised by Prof. Tapan K. Gandhi.',
+    image: '/images/covers/health.jpg',
+    category: 'Healthcare',
+    tags: ['ML', 'INDICON'],
     links: [
       { text: 'Paper', url: 'https://ieeexplore.ieee.org/document/10040129/' },
       { text: 'Code', url: 'https://github.com/aadarshgupta1412/covid-symptoms-classification/' },
-    ],
-  },
-  {
-    id: 'enphase',
-    title: 'Firmware Optimization at Enphase Energy',
-    period: 'July 2023 - December 2024',
-    description: 'Developed Python-based tools for firmware analysis and control system optimization.',
-    highlights: [
-      'Improved simulated power performance by 15% through firmware correction analysis',
-      'Deployed SciPy-based optimization for parameter estimation via time series curve fitting',
-      'Reduced test duration by 20% through Python test framework implementation',
-    ],
-    technologies: ['Python', 'SciPy', 'Control Systems', 'Time Series Analysis'],
-    category: 'Engineering',
-  },
-  {
-    id: 'medtronic',
-    title: 'Surgical Robotics at Medtronic',
-    period: 'June 2022 - August 2022',
-    description: 'Worked on vision systems and tracking for HUGO RAS surgical robotic arms.',
-    highlights: [
-      'Devised novel vision mechanism for automated masking of laparoscopic surgical video (US Patent filed)',
-      'Real-time localized tracking system for robotic arms',
-      'Collision-avoidance algorithms implementation',
-    ],
-    technologies: ['Computer Vision', 'Python', 'Real-time Systems'],
-    category: 'Research',
-    links: [
-      { text: 'Report', url: 'https://github.com/aadarshgupta1412/Medtronic_internship/' },
-    ],
-  },
-  {
-    id: 'pischool',
-    title: 'LLM-based Chatbot Evaluation System',
-    period: 'March 2023 - May 2023',
-    description: 'Developed an LLM-based chatbot evaluation system for Pi School of AI fellowship.',
-    highlights: [
-      'Created system that emulates human assessment for feedback generation',
-      'Integrated with business chatbot websites',
-      'Presented findings at prompt engineering workshop',
-    ],
-    technologies: ['LLMs', 'Python', 'NLP', 'Prompt Engineering'],
-    category: 'Research',
-    links: [
-      { text: 'Code', url: 'https://github.com/aadarshgupta1412/pischool-generative-model/' },
-      { text: 'Workshop', url: 'https://github.com/aadarshgupta1412/pischool-prompt-guide/' },
+      {
+        text: 'Slides',
+        url: 'https://drive.google.com/file/d/1uzPiXztPDv-8mYI5ayAbPW8zjBweFH2B/view?usp=share_link',
+      },
+      { text: 'Advisor', url: 'https://tapankgandhi.com/' },
     ],
   },
   {
     id: 'dementia',
-    title: 'ML Approaches to Differential Diagnosis of Dementia',
-    period: 'January 2022',
-    description: 'Built models for clinical dementia rating prediction at NEUROHACK 2022.',
-    highlights: [
-      'Achieved 95.72% test accuracy on dementia rating prediction',
-      'Implemented PCA-based multi-class SVM classifier',
-      'Multi-modal ensemble classification on LASI-DAD dataset',
-    ],
-    technologies: ['Machine Learning', 'SVM', 'PCA', 'Python', 'Healthcare'],
-    category: 'Hackathon',
+    title: 'Dementia rating from LASI-DAD',
+    period: '2022',
+    blurb:
+      'CDR prediction at NEUROHACK 2022. PCA-SVM and a multimodal ensemble. 95.72% test accuracy.',
+    image: '/images/covers/health.jpg',
+    category: 'Healthcare',
+    tags: ['SVM', 'Healthcare'],
     links: [
       { text: 'Code', url: 'https://github.com/aadarshgupta1412/NEUROHACK2022_Dementia/' },
+      { text: 'NEUROHACK', url: 'https://demondementia.com/neurohack2022/' },
     ],
   },
+];
+
+export type BlogPost = {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  tags: string[];
+  body: { type: 'p' | 'h2'; text: string }[];
+  links?: { text: string; url: string }[];
+};
+
+export const BLOG_POSTS: BlogPost[] = [
   {
-    id: 'handwriting',
-    title: 'Handwritten Expression Evaluator',
-    period: 'June 2021',
-    description: 'ML model to recognize handwritten digits and operators using CNN.',
-    highlights: [
-      'Achieved 78.1% accuracy on test set of 50K images',
-      'Trained on annotated dataset of 60K images',
-      'Hack The Summer project at AIML Club, IIT Delhi',
+    slug: 'thena-ai-year',
+    title: 'A year of shipping agents at Thena',
+    date: '2026-01-15',
+    excerpt:
+      'What I actually built: chat agents, a copilot, AI logs, auto-responders, and an MCP server. The company blog describes the products; this is the engineering list.',
+    tags: ['Thena', 'Agents'],
+    body: [
+      {
+        type: 'p',
+        text: 'I joined Thena in January 2025 to put agents into a B2B support product that already lived in Slack, email, and tickets. The first three months were a chat interface with memory and retrieval. After that the work was the rest of the surface: workflows that change tickets, a copilot that can call tools, logs that show what the model did, and a way for Claude or Raycast to talk to the same data.',
+      },
+      {
+        type: 'p',
+        text: 'The numbers I still use: 85% lower chat latency, 66% faster workflows, after caching, checkpointing, and queued RAG. The harder part was not the model. It was idempotency when two agent turns try to update the same ticket, and evals that catch a bad tool call before a customer sees it.',
+      },
+      {
+        type: 'p',
+        text: 'Thena published product posts on AI Logs, web chat, the copilot, auto-responders, and MCP. I did not write those articles. They are a reasonable description of the features.',
+      },
     ],
-    technologies: ['CNN', 'TensorFlow', 'Computer Vision', 'Python'],
-    category: 'Hackathon',
+    links: THENA_PRODUCTS.map((p) => ({ text: p.title, url: p.url })),
+  },
+  {
+    slug: 'reading-sleep',
+    title: 'Sleep staging from EEG',
+    date: '2023-05-01',
+    excerpt:
+      'B.Tech thesis at CSND Lab: sleep stages, lucid dreaming, and microsleep from polysomnography.',
+    tags: ['Thesis', 'EEG'],
+    body: [
+      {
+        type: 'p',
+        text: 'The thesis was a classification problem on overnight recordings — EEG, EOG, EMG — under Prof. Saurabh Gandhi at CSND Lab, IIT Delhi. Standard sleep stages (wake, N1–N3, REM) are the usual labels. Lucid dreaming and microsleep are rarer and worse labeled; you cannot ask someone in the moment, so you infer them from the recording. Write-up and slides are below.',
+      },
+    ],
     links: [
-      { text: 'Code', url: 'https://github.com/aadarshgupta1412/ML_Hackathon/' },
+      {
+        text: 'Thesis',
+        url: 'https://drive.google.com/file/d/18Okc9WLLyHJkzXcqNayY5lLpSSfAILBD/view?usp=sharing',
+      },
+      {
+        text: 'Slides',
+        url: 'https://drive.google.com/file/d/1hWRyexxCHhPFrs9_Ty6T683C5selSqQs/view?usp=sharing',
+      },
     ],
   },
+  {
+    slug: 'masking-the-or',
+    title: 'Masking laparoscopic video',
+    date: '2022-08-15',
+    excerpt:
+      'Summer at Medtronic: automated masking for surgical video, plus tracking for HUGO RAS. Patent filed.',
+    tags: ['Vision', 'Patent'],
+    body: [
+      {
+        type: 'p',
+        text: 'The internship was on HUGO RAS. One thread was automated masking of laparoscopic video — decide, in the stream, what should stay in the frame. The other was real-time arm tracking and collision avoidance. Latency is a safety property in that room, not a dashboard metric.',
+      },
+      {
+        type: 'p',
+        text: 'The work went into a US patent application with Medtronic. Report and letter of recommendation are below.',
+      },
+    ],
+    links: [
+      { text: 'Report', url: 'https://github.com/aadarshgupta1412/Medtronic_internship/' },
+      {
+        text: 'LoR',
+        url: 'https://drive.google.com/file/d/1K6I-O4OPIWpBWJfTDMUIqwAMENpbCahA/view?usp=sharing',
+      },
+    ],
+  },
+];
+
+export const PHOTOGRAPHY = [
+  {
+    id: 'canopy',
+    src: '/images/photography/canopy.jpg',
+    alt: 'Looking up through a dark canopy at a pale opening of sky',
+    caption: 'Canopy',
+    aspect: '3/4',
+  },
+  {
+    id: 'corridor',
+    src: '/images/photography/corridor.jpg',
+    alt: 'Long concrete corridor ending in a strip of daylight',
+    caption: 'Corridor',
+    aspect: '4/3',
+  },
+  {
+    id: 'water',
+    src: '/images/photography/water.jpg',
+    alt: 'Dark water with a single bright reflection',
+    caption: 'Water',
+    aspect: '3/4',
+  },
+  {
+    id: 'terrace',
+    src: '/images/photography/terrace.jpg',
+    alt: 'City at blue hour from a terrace, warm windows in the distance',
+    caption: 'Terrace',
+    aspect: '4/3',
+  },
+  {
+    id: 'paper',
+    src: '/images/photography/paper.jpg',
+    alt: 'Close photograph of paper fiber and graphite',
+    caption: 'Notebook',
+    aspect: '3/4',
+  },
+  {
+    id: 'bench',
+    src: '/images/photography/bench.jpg',
+    alt: 'Cables and a faint waveform glow on a dark bench',
+    caption: 'Bench',
+    aspect: '4/3',
+  },
 ] as const;
 
-// Project Categories
-export const PROJECT_CATEGORIES = ['All', 'Production AI', 'Research', 'Engineering', 'Hackathon'] as const;
-
-// Stats for Homepage
-export const STATS = [
-  { number: '85%', label: 'Latency Reduction' },
-  { number: '8+', label: 'Projects Shipped' },
-  { number: '1', label: 'US Patent Filed' },
-  { number: '1', label: 'IEEE Publication' },
+export const NAV_ITEMS = [
+  { label: 'Work', href: '/projects/' },
+  { label: 'About', href: '/about/' },
+  { label: 'Vitae', href: '/vitae/' },
+  { label: 'Notes', href: '/blog/' },
+  { label: 'Photo', href: '/photography/' },
+  { label: 'Contact', href: '/contact/' },
 ] as const;
 
-// Featured Projects for Homepage
-export const FEATURED_PROJECTS = [
-  {
-    title: 'AI-Driven CRM Workflows',
-    description: 'Architected production-grade AI agents with entity-aware memory and RAG for Thena\'s B2B CRM platform.',
-    tags: ['LangGraph', 'FastAPI', 'RAG'],
-    link: '/projects#thena',
-  },
-  {
-    title: 'Brain State Classification',
-    description: 'Deep learning techniques for sleep stage classification and lucid dream state detection from EEG data.',
-    tags: ['PyTorch', 'Signal Processing', 'ML'],
-    link: '/projects#brain-states',
-  },
-  {
-    title: 'COVID-19 ML Diagnostics',
-    description: 'Low-resource detection techniques achieving 93.36% accuracy using feature reduction for supervised classifiers.',
-    tags: ['ML', 'Healthcare', 'Research'],
-    link: '/projects#covid',
-  },
-] as const;
-
-// Contact Information
-export const CONTACT_INFO = [
-  {
-    label: 'Email',
-    value: PERSONAL_INFO.email,
-    href: `mailto:${PERSONAL_INFO.email}`,
-    icon: 'email',
-  },
-  {
-    label: 'Phone',
-    value: PERSONAL_INFO.phone,
-    href: `tel:${PERSONAL_INFO.phone.replace(/[^0-9+]/g, '')}`,
-    icon: 'phone',
-  },
-  {
-    label: 'Location',
-    value: PERSONAL_INFO.location,
-    icon: 'location',
-  },
-] as const;
-
-// Social Links
 export const SOCIAL_LINKS = [
-  {
-    name: 'GitHub',
-    url: PERSONAL_INFO.github,
-    icon: 'github',
-  },
-  {
-    name: 'LinkedIn',
-    url: PERSONAL_INFO.linkedin,
-    icon: 'linkedin',
-  },
-  {
-    name: 'Google Scholar',
-    url: PERSONAL_INFO.scholar,
-    icon: 'scholar',
-  },
+  { name: 'CV', url: '/resume.pdf', icon: 'cv' as const },
+  { name: 'GitHub', url: PERSONAL_INFO.github, icon: 'github' as const },
+  { name: 'LinkedIn', url: PERSONAL_INFO.linkedin, icon: 'linkedin' as const },
+  { name: 'Scholar', url: PERSONAL_INFO.scholar, icon: 'scholar' as const },
 ] as const;

@@ -8,7 +8,14 @@ const config: Config = {
   ],
   darkMode: ["class"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", "Figtree", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Bricolage Grotesque", "sans-serif"],
+        serif: ["var(--font-display)", "Bricolage Grotesque", "sans-serif"],
+        mono: ["var(--font-mono)", "IBM Plex Mono", "ui-monospace", "monospace"],
+      },
+    },
   },
   plugins: [],
 };
