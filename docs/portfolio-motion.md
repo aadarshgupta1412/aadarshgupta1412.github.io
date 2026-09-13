@@ -36,7 +36,7 @@ Backpack validation: production build and TypeScript passed. Navigated through W
 
 ## Theme-switch cloth reveal
 
-A deliberate theme toggle plays a 1.6s cloth reveal at the bird's normal size. A lavender cloth unfolds from the backpack side, covers the bird, then folds back away. The bird retains its previous palette until 600ms, while fully covered; the rest of the page switches normally. No bird scaling or surprised-eye effect remains.
+A deliberate theme toggle plays a 2.6s magician sequence at the bird's normal size. A brief wide-eyed double take precedes the trick. The wing reaches into the backpack as its flap opens, retrieves a folded lavender cloth, lifts it over the bird, then tucks it back into the pack. Two small sparkle strokes mark the reveal. The bird retains its previous palette until 1350ms, while fully covered; the rest of the page switches normally. The bird stays at its normal size throughout.
 
 Initial hydration updates without playing. Repeated toggles cancel the previous animation and palette timer. Unmount cleans up both; reduced motion skips the reveal, and enabling it mid-animation immediately applies the current theme.
 

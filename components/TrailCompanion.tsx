@@ -19,37 +19,74 @@ function Bird({ perch }: { perch: Perch }) {
   const lastThemeChange = useRef(themeChangeId);
   const [birdTheme, setBirdTheme] = useState(theme);
   const cloth = useRef<SVGGElement>(null);
+  const trickEyes = useRef<SVGGElement>(null);
+  const trickWing = useRef<SVGGElement>(null);
+  const trickFlap = useRef<SVGGElement>(null);
+  const flourish = useRef<SVGGElement>(null);
 
   useLayoutEffect(() => {
     const deliberate = lastThemeChange.current !== themeChangeId;
     lastThemeChange.current = themeChangeId;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!deliberate || reduced.matches || !cloth.current?.animate) {
+    if (!deliberate || reduced.matches || !cloth.current?.animate || !trickEyes.current || !trickWing.current || !trickFlap.current || !flourish.current) {
       setBirdTheme(theme);
       return;
     }
 
-    // The bird keeps its old palette until the cloth completely covers it.
-    const animation = cloth.current.animate([
-      { opacity: 0, transform: 'translate(12px, 44px) scale(0.08, 0.12)' },
-      { opacity: 1, transform: 'translate(0, 20px) scale(0.65, 0.7)', offset: 0.12 },
-      { opacity: 1, transform: 'translate(0, 0) scale(1)', offset: 0.28 },
-      { opacity: 1, transform: 'translate(0, 0) scale(1)', offset: 0.58 },
-      { opacity: 1, transform: 'translate(8px, 30px) scale(0.8, 0.45)', offset: 0.82 },
-      { opacity: 0, transform: 'translate(12px, 44px) scale(0.08, 0.12)' },
-    ], { duration: 1600, easing: 'ease-in-out' });
-    const reveal = window.setTimeout(() => setBirdTheme(theme), 600);
+    // Reach, retrieve, cover, reveal, and tuck away share one finite timeline.
+    const timing = { duration: 2600, easing: 'ease-in-out' };
+    const animations = [
+      trickEyes.current.animate([
+        { transform: 'scale(1)' },
+        { transform: 'scale(1.4)', offset: 0.05 },
+        { transform: 'scale(1.4)', offset: 0.1 },
+        { transform: 'scale(1)', offset: 0.17 },
+        { transform: 'scale(1)' },
+      ], timing),
+      trickWing.current.animate([
+        { transform: 'rotate(0deg)' },
+        { transform: 'rotate(0deg)', offset: 0.1 },
+        { transform: 'rotate(115deg)', offset: 0.2 },
+        { transform: 'rotate(115deg)', offset: 0.22 },
+        { transform: 'rotate(175deg)', offset: 0.42 },
+        { transform: 'rotate(175deg)', offset: 0.62 },
+        { transform: 'rotate(100deg)', offset: 0.82 },
+        { transform: 'rotate(0deg)' },
+      ], timing),
+      trickFlap.current.animate([
+        { transform: 'scaleY(1)' },
+        { transform: 'scaleY(-0.9)', offset: 0.1 },
+        { transform: 'scaleY(-0.9)', offset: 0.88 },
+        { transform: 'scaleY(1)' },
+      ], timing),
+      cloth.current.animate([
+        { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)' },
+        { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)', offset: 0.14 },
+        { opacity: 1, transform: 'translate(12px, 21px) scale(0.25, 0.4)', offset: 0.24 },
+        { opacity: 1, transform: 'translate(0, 0) scale(1)', offset: 0.42 },
+        { opacity: 1, transform: 'translate(0, 0) scale(1)', offset: 0.62 },
+        { opacity: 1, transform: 'translate(0, 27px) scale(0.45, 0.3)', offset: 0.8 },
+        { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)', offset: 0.92 },
+        { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)' },
+      ], timing),
+      flourish.current.animate([
+        { opacity: 0 }, { opacity: 0, offset: 0.72 },
+        { opacity: 1, offset: 0.8 }, { opacity: 0 },
+      ], timing),
+    ];
+    const cancel = () => animations.forEach((animation) => animation.cancel());
+    const reveal = window.setTimeout(() => setBirdTheme(theme), 1350);
     const onPreferenceChange = () => {
       if (reduced.matches) {
         window.clearTimeout(reveal);
-        animation.cancel();
+        cancel();
         setBirdTheme(theme);
       }
     };
     reduced.addEventListener('change', onPreferenceChange);
     return () => {
       window.clearTimeout(reveal);
-      animation.cancel();
+      cancel();
       reduced.removeEventListener('change', onPreferenceChange);
     };
   }, [theme, themeChangeId]);
@@ -65,19 +102,19 @@ function Bird({ perch }: { perch: Perch }) {
             <path d="M17 39v-4q0-5 5-5h3" />
             <path d="M13 39q7-5 16 0l2 24q-9 6-18 0Z" fill="var(--background-light)" />
             <path d="M16 51h12v10H16Z" opacity=".65" />
-            <path className="bird-pack-flap" d="M13 39q8-4 16 0l-2 9H15Z" fill="var(--background-light)" />
+            <g ref={trickFlap} className="bird-trick-flap"><path className="bird-pack-flap" d="M13 39q8-4 16 0l-2 9H15Z" fill="var(--background-light)" /></g>
             <path d="M21 45v5" stroke="var(--accent)" />
           </g>
           <path d="M26 36c0-14 10-22 23-20 13 1 20 13 17 28-1 5 1 9-1 14-4 12-22 16-33 8-8-6-9-17-6-30Z" fill="var(--background)" />
           <path d="M28 38q6 5 6 16" stroke="var(--accent)" opacity=".7" />
           <path d="m42 16-4-7m8 7 2-9m3 10 6-6" />
           <path d="m65 35 10 5-11 4" fill="var(--accent)" />
-          <g className="bird-eyes">
+          <g className="bird-eyes"><g ref={trickEyes} className="bird-trick-eyes">
               <circle cx="43" cy="32" r="2.1" fill="currentColor" stroke="none" />
               <circle cx="57" cy="32" r="2.1" fill="currentColor" stroke="none" />
-          </g>
+          </g></g>
           <path d="M47 39q4 3 7 0" opacity=".65" />
-          <path className="bird-wing" d="M32 44c-3 13 8 16 16 9-6 1-11-3-16-9Z" fill="var(--background)" />
+          <g ref={trickWing} className="bird-trick-wing"><path className="bird-wing" d="M32 44c-3 13 8 16 16 9-6 1-11-3-16-9Z" fill="var(--background)" /></g>
           {perch === 'work' && <g className="bird-prop"><g className="bird-tool"><circle cx="60" cy="48" r="8" fill="var(--background)" /><path d="m66 54 7 9" /><circle cx="60" cy="48" r="4.5" stroke="var(--accent)" opacity=".6" /></g></g>}
           {perch === 'photos' && <g className="bird-prop"><g className="bird-tool"><path d="m43 51 4-5h12l3 5h6v15H42V51Z" fill="var(--background)" /><circle cx="55" cy="58" r="5" stroke="var(--accent)" /><path d="M63 54h1" /><path className="bird-shutter" d="m69 43 3-3m-7 1v-4m7 10h4" stroke="var(--accent)" /></g></g>}
           {perch === 'notes' && <g className="bird-prop"><g className="bird-tool"><path d="M42 50q8-3 13 1 6-4 14-1v17q-8-3-14 1-5-4-13-1Z" fill="var(--background)" /><path d="M55 51v17m-9-13 5 1m8 0 6-1m-19 5 5 1m8 0 6-1" opacity=".6" /></g></g>}
@@ -90,6 +127,9 @@ function Bird({ perch }: { perch: Perch }) {
         <path d="M23 9Q18 35 23 72M42 10Q48 37 42 73M64 9Q58 39 66 72" opacity=".35" />
         <path d="m45 30 2 7 7 2-7 2-2 7-2-7-7-2 7-2Z" fill="#fff9ed" stroke="none" />
         <path d="M12 72q8-3 13 1t17 0 18 0 16-1" strokeDasharray="2 3" opacity=".6" />
+      </g>
+      <g ref={flourish} className="bird-trick-flourish" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round">
+        <path d="M73 17v8m-4-4h8M13 21v6m-3-3h6" />
       </g>
     </svg>
   );
