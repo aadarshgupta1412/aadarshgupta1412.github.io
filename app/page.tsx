@@ -1,82 +1,86 @@
-'use client';
-
 import Link from 'next/link';
 import { HeroSection } from '@/components/HeroSection';
-import { StoryArc } from '@/components/StoryArc';
-import { NewsList } from '@/components/NewsList';
-import { ProjectGrid } from '@/components/ProjectGrid';
-import { FadeIn } from '@/components/FadeIn';
+import { SelectedWork } from '@/components/SelectedWork';
 import { Container } from '@/components/Container';
-import { BLOG_POSTS } from '@/lib/data';
-import { BlogMark } from '@/components/BlogMark';
+import { BLOG_POSTS, PHOTOGRAPHY } from '@/lib/data';
+
+const photographs = ['confluence', 'kuari-night'].map((id) => PHOTOGRAPHY.find((photo) => photo.id === id)!);
 
 export default function Home() {
   return (
     <div>
       <HeroSection />
 
-      <section className="py-20 md:py-28">
-        <Container>
-          <p className="section-kicker">News</p>
-          <h2 className="section-title">Lately</h2>
-          <NewsList />
-        </Container>
-      </section>
-
-      <section className="py-20 md:py-28 bg-[var(--background-light)]/70">
-        <Container>
-          <p className="section-kicker">Path</p>
-          <h2 className="section-title">Where the work has gone</h2>
-          <p className="text-[var(--text-body)] max-w-2xl mb-12 -mt-4">
-            IIT Delhi, a summer at Medtronic, firmware at Enphase, a year of production agents at Thena, and now agent observability at Neatlogs.
-          </p>
-          <StoryArc />
-        </Container>
-      </section>
-
-      <section className="py-20 md:py-28">
+      <section className="pb-16 md:pb-24" aria-labelledby="work-title">
         <Container>
           <div className="flex items-end justify-between gap-4 mb-8">
             <div>
-              <p className="section-kicker">Work</p>
-              <h2 className="section-title mb-0">Selected</h2>
+              <p className="section-kicker">Selected work</p>
+              <h2 id="work-title" className="section-title mb-0">Questions I’ve worked on</h2>
             </div>
-            <Link href="/projects/" className="text-sm text-[var(--primary)] mb-1 shrink-0">
-              All work →
-            </Link>
+            <Link href="/projects/" className="text-sm text-[var(--accent)] shrink-0 hover:underline underline-offset-4">All work →</Link>
           </div>
-          <ProjectGrid featuredOnly />
+          <SelectedWork />
+          <Link href="/about/" className="inline-block mt-6 text-sm text-[var(--accent)] hover:underline underline-offset-4">More about my path →</Link>
         </Container>
       </section>
 
-      <section className="py-20 md:py-28 border-t border-[var(--border)]">
+      <section className="py-14 md:py-20 bg-[var(--background-light)]" aria-labelledby="photos-title">
         <Container>
+          <p className="section-kicker">Away from the screen</p>
           <div className="flex items-end justify-between gap-4 mb-8">
             <div>
-              <p className="section-kicker">Notes</p>
-              <h2 className="section-title mb-0">Writing</h2>
+              <h2 id="photos-title" className="section-title mb-3">A camera on the trail</h2>
+              <p>Mostly treks, plus a couple of trips.</p>
             </div>
-            <Link href="/blog/" className="text-sm text-[var(--primary)] mb-1 shrink-0">
-              All notes →
-            </Link>
+            <Link href="/photography/" className="text-sm text-[var(--accent)] shrink-0 hover:underline underline-offset-4">All photos →</Link>
           </div>
-          <ul className="divide-y divide-[var(--border)]">
+          <div className="grid sm:grid-cols-2 gap-8">
+            {photographs.map((photo) => (
+              <figure key={photo.id}>
+                <Link href="/photography/" className="block rounded-sm overflow-hidden" aria-label={`View photography: ${photo.title}`}>
+                  <img src={photo.src} alt={photo.alt} width={900} height={600} loading="lazy" className="w-full aspect-[3/2] object-cover hover:opacity-90 transition-opacity" />
+                </Link>
+                <figcaption className="mt-4">
+                  <p className="font-display text-lg text-[var(--text-title)]">{photo.title}</p>
+                  <p className="text-sm text-[var(--text-body)] mt-1">{photo.note}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16 md:py-24" aria-labelledby="notes-title">
+        <Container>
+          <p className="section-kicker">Notes</p>
+          <h2 id="notes-title" className="section-title">From the work</h2>
+          <ul className="divide-y divide-[var(--border)] border-t border-[var(--border)]">
             {BLOG_POSTS.map((post) => (
               <li key={post.slug}>
-                <FadeIn>
-                  <Link href={`/blog/${post.slug}/`} className="flex gap-4 py-5 group">
-                    <BlogMark className="text-[var(--accent)] mt-1 shrink-0" />
-                    <div>
-                      <h3 className="font-display text-xl text-[var(--text-title)] group-hover:text-[var(--primary)]">
-                        {post.title}
-                      </h3>
-                      <p className="text-sm text-[var(--text-light)] mt-1">{post.excerpt}</p>
-                    </div>
-                  </Link>
-                </FadeIn>
+                <Link href={`/blog/${post.slug}/`} className="grid sm:grid-cols-[100px_1fr_24px] gap-2 sm:gap-6 py-6 group">
+                  <time dateTime={post.date} className="font-mono text-xs text-[var(--text-light)] pt-1">{post.date.slice(0, 7)}</time>
+                  <div>
+                    <h3 className="font-display text-xl group-hover:text-[var(--accent)]">{post.title}</h3>
+                    <p className="text-sm text-[var(--text-body)] mt-2 max-w-2xl">{post.excerpt}</p>
+                  </div>
+                  <span aria-hidden="true" className="hidden sm:block text-[var(--accent)]">↗</span>
+                </Link>
               </li>
             ))}
           </ul>
+        </Container>
+      </section>
+
+      <section className="pb-16 md:pb-24" aria-labelledby="contact-title">
+        <Container>
+          <div className="border-t border-[var(--border)] pt-9 flex flex-wrap items-center justify-between gap-5">
+            <div>
+              <h2 id="contact-title" className="text-2xl mb-2">Have something in mind?</h2>
+              <p>Agents, research, or a good trail.</p>
+            </div>
+            <Link href="/contact/" className="text-[var(--accent)] hover:underline underline-offset-4">Get in touch →</Link>
+          </div>
         </Container>
       </section>
     </div>
