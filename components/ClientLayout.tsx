@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useRef } from 'react';
+import { TrailCompanion } from './TrailCompanion';
 import { Atmosphere } from './Atmosphere';
 import { VerticalNav } from './VerticalNav';
 import { Navigation } from './Navigation';
@@ -28,12 +29,13 @@ export function ClientLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <Atmosphere />
+      <TrailCompanion />
       <Navigation />
       <VerticalNav />
       <div className="hidden lg:block">
         <ThemeToggle className="fixed top-7 right-7 xl:top-8 xl:right-8 z-50" />
       </div>
-      <div className="relative z-10 pt-14 lg:pt-0 lg:pl-16 xl:pl-[72px]">{children}</div>
+      <div className="relative z-10 pt-14 lg:pt-0 lg:pl-16 xl:pl-[72px] pr-12 xl:pr-0">{children}</div>
     </>
   );
 }

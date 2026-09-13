@@ -1,28 +1,38 @@
 import Link from 'next/link';
 import { PROJECTS } from '@/lib/data';
 import { ExternalLink } from './ExternalLink';
+import { WorkSteps } from './WorkSteps';
 
 const investigations = [
   {
     id: 'traces',
     question: 'Where did the agent go wrong?',
     note: 'I build detections, search, and evaluations over agent traces so a reviewer can find a failure and inspect the evidence.',
-    detail: 'QLoRA detection · hybrid retrieval · trace evaluations',
-    steps: ['Agent runs', 'Detections + search', 'Evidence to inspect'],
+    steps: [
+      { label: 'Agent runs', note: 'The starting point is a trace: the record of an agent’s run, including its tool calls and responses.' },
+      { label: 'Detections + search', note: 'I combine model-based and rule-based detections with hybrid search over traces in ClickHouse.' },
+      { label: 'Evidence to inspect', note: 'Interpretability agents walk a trace and help draft evaluations from its context, keeping the evidence available to a reviewer.' },
+    ],
   },
   {
     id: 'thena-agents',
     question: 'What happens when agents meet real support tickets?',
     note: 'I shipped chat agents, a copilot, AI logs, and MCP. The work included keeping ticket updates idempotent under concurrent load, and cutting chat latency by 85%.',
-    detail: 'Memory · tool use · concurrent workflows',
-    steps: ['Ticket context', 'Retrieval + tools', 'Action + audit trail'],
+    steps: [
+      { label: 'Ticket context', note: 'Entity-aware memory and retrieval bring account and ticket context into the agent’s conversation.' },
+      { label: 'Retrieval + tools', note: 'Agents retrieve knowledge and call tools across the support product. Caching and checkpointing helped cut chat latency by 85%.' },
+      { label: 'Action + audit trail', note: 'Ticket workflows need idempotency under concurrent load. AI Logs expose the actions an agent took.' },
+    ],
   },
   {
     id: 'brain-states',
     question: 'What can a recording tell us about sleep?',
     note: 'My thesis at IIT Delhi studied sleep stages, lucid dreaming, and microsleep from EEG, EOG, and EMG recordings, with Prof. Saurabh Gandhi at CSND Lab.',
-    detail: 'B.Tech thesis · cognitive systems · sleep classification',
-    steps: ['Overnight recordings', 'Classification', 'Brain states'],
+    steps: [
+      { label: 'Overnight recordings', note: 'Polysomnography brings together EEG, eye movements (EOG), and muscle activity (EMG) across a night of sleep.' },
+      { label: 'Classification', note: 'The thesis studied classification from these recordings, including the standard wake, N1–N3, and REM stages.' },
+      { label: 'Brain states', note: 'Lucid dreaming and microsleep are rarer and harder to label. The thesis and slides describe the research in more detail.' },
+    ],
   },
 ];
 
@@ -39,24 +49,13 @@ export function SelectedWork() {
               <p className="max-w-xl mb-4">{item.note}</p>
               <div className="flex flex-wrap gap-x-5 gap-y-3 text-sm text-[var(--accent)]">
                 {item.id === 'thena-agents' ? (
-                  <Link href="/blog/thena-ai-year/" className="hover:underline underline-offset-4">Engineering notes →</Link>
+                  <Link href="/blog/thena-ai-year/" className="quiet-link">Engineering notes →</Link>
                 ) : project.links?.slice(0, 2).map((link) => (
-                  <ExternalLink key={link.url} href={link.url} className="hover:underline underline-offset-4">{link.text} ↗</ExternalLink>
+                  <ExternalLink key={link.url} href={link.url} className="quiet-link">{link.text} ↗</ExternalLink>
                 ))}
               </div>
             </div>
-            <div className="self-center border-l-2 border-[var(--border)] pl-5">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-light)] mb-4">At a glance</p>
-              <ol className="space-y-2">
-                {item.steps.map((step, i) => (
-                  <li key={step} className="text-sm text-[var(--text-title)]">
-                    {i > 0 && <span aria-hidden="true" className="block text-[var(--accent)] mb-2">↓</span>}
-                    {step}
-                  </li>
-                ))}
-              </ol>
-              <p className="text-xs text-[var(--text-light)] mt-5 leading-relaxed">{item.detail}</p>
-            </div>
+            <WorkSteps title={project.title} steps={item.steps} />
           </article>
         );
       })}
