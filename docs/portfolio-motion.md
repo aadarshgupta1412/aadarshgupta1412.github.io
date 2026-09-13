@@ -34,8 +34,10 @@ Validation: production build and TypeScript checks passed. Browser checks confir
 
 Backpack validation: production build and TypeScript passed. Navigated through Work, About, Vitae, Notes, Photo, and Contact: correct tool and exactly one bird. Direct loads at 320px across those routes showed no horizontal overflow. Inspected the open-pack pose and final camera/envelope poses, plus the narrow contact layout. Browser console had no errors.
 
-## Theme-switch reaction
+## Theme-switch cloth reveal
 
-A deliberate theme toggle triggers a 1.8s bird reaction: light mode squints its eyes and lifts a wing toward its face; dark mode widens its eyes and startles its wing. The bird briefly grows to 2.2 times its usual size, anchored to the right edge, and holds its expression before settling back. Two surprise strokes appear. The page keeps its existing theme-switch timing. Nested SVG groups compose the reaction with gaze and backpack motion. Initial theme hydration does not trigger it. Rapid toggles cancel the previous reaction; unmount and enabling reduced motion cancel active animations. Reduced motion skips the reaction entirely.
+A deliberate theme toggle plays a 1.6s cloth reveal at the bird's normal size. A lavender cloth unfolds from the backpack side, covers the bird, then folds back away. The bird retains its previous palette until 600ms, while fully covered; the rest of the page switches normally. No bird scaling or surprised-eye effect remains.
 
-Validation: production build, TypeScript, and diff checks passed. Local browser checks covered both theme reactions and repeated toggles; no console errors were reported. Reduced-motion cancellation was inspected in source.
+Initial hydration updates without playing. Repeated toggles cancel the previous animation and palette timer. Unmount cleans up both; reduced motion skips the reveal, and enabling it mid-animation immediately applies the current theme.
+
+Validation: production build, TypeScript, and diff checks passed. Browser checks confirmed the cloth appears in both directions, the old bird palette remains visible during unfolding, and the bird returns at its original size. No console errors. Reduced-motion handling inspected in source.

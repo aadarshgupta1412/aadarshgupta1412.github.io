@@ -363,7 +363,7 @@ html {
   .bird-rail { position: fixed; z-index: 30; top: 34%; right: 4px; transform: translateY(var(--bird-travel, 0px)); transition: transform 450ms cubic-bezier(.22, 1, .36, 1); }
   .bird-perch { position: relative; width: 60px; }
   .bird-button { display: block; width: 60px; height: 60px; border-radius: 50%; color: var(--primary); cursor: pointer; -webkit-tap-highlight-color: transparent; }
-  .trail-bird { transform-origin: right center; display: block; width: 100%; height: 100%; overflow: visible; }
+  .trail-bird { display: block; width: 100%; height: 100%; overflow: visible; }
   .bird-button > span { display: block; }
   .bird-body { transform-origin: 45px 69px; transition: transform 240ms ease-out; }
   .bird-eyes { transform: translate(var(--bird-eye-x, 0px), var(--bird-eye-y, 0px)); transition: transform 180ms ease-out; }
@@ -452,9 +452,19 @@ html {
   25%, 50% { opacity: .8; }
 }
 
-/* Theme reactions compose with gaze and backpack movement on separate SVG groups. */
+/* The cloth hides the bird's palette swap without delaying the page theme. */
 @layer components {
-  .bird-theme-eyes { transform-origin: 50px 32px; }
-  .bird-theme-wing { transform-origin: 33px 45px; }
-  .bird-surprise { opacity: 0; }
+  .trail-bird[data-bird-theme='light'] {
+    --background: oklch(94.8% 0.018 78);
+    --background-light: oklch(97.2% 0.012 78);
+    --accent: oklch(44% 0.11 198);
+    color: oklch(28% 0.045 205);
+  }
+  .trail-bird[data-bird-theme='dark'] {
+    --background: oklch(16.5% 0.008 250);
+    --background-light: oklch(20.2% 0.01 250);
+    --accent: oklch(84.42% 0.14 202);
+    color: oklch(84.42% 0.14 202);
+  }
+  .bird-cloth { opacity: 0; transform-origin: 0 0; pointer-events: none; }
 }

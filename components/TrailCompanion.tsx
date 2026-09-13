@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
 
@@ -17,55 +17,45 @@ const captions: Record<Perch, string> = {
 function Bird({ perch }: { perch: Perch }) {
   const { theme, themeChangeId } = useTheme();
   const lastThemeChange = useRef(themeChangeId);
-  const portrait = useRef<SVGSVGElement>(null);
-  const eyes = useRef<SVGGElement>(null);
-  const wing = useRef<SVGGElement>(null);
-  const surprise = useRef<SVGGElement>(null);
+  const [birdTheme, setBirdTheme] = useState(theme);
+  const cloth = useRef<SVGGElement>(null);
 
-  useEffect(() => {
-    // Only deliberate switches: don't startle on hydration or route changes.
-    if (lastThemeChange.current === themeChangeId) return;
+  useLayoutEffect(() => {
+    const deliberate = lastThemeChange.current !== themeChangeId;
     lastThemeChange.current = themeChangeId;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (reduced.matches || !eyes.current?.animate || !wing.current || !surprise.current || !portrait.current) return;
+    if (!deliberate || reduced.matches || !cloth.current?.animate) {
+      setBirdTheme(theme);
+      return;
+    }
 
-    const light = theme === 'light';
-    const timing = { duration: 1800, easing: 'ease-in-out' };
-    const animations = [
-      portrait.current.animate([
-        { transform: 'scale(1)' },
-        { transform: 'scale(2.2)', offset: 0.18 },
-        { transform: 'scale(2.2)', offset: 0.7 },
-        { transform: 'scale(1)' },
-      ], timing),
-      eyes.current.animate([
-        { transform: 'scale(1)' },
-        { transform: light ? 'scale(1.15, 0.18)' : 'scale(1.65)', offset: 0.22 },
-        { transform: light ? 'scale(1.1, 0.3)' : 'scale(1.5)', offset: 0.7 },
-        { transform: 'scale(1)' },
-      ], timing),
-      wing.current.animate([
-        { transform: 'translate(0, 0) rotate(0deg)' },
-        { transform: light ? 'translate(6px, -11px) rotate(-32deg)' : 'translate(-3px, -3px) rotate(24deg)', offset: 0.24 },
-        { transform: light ? 'translate(6px, -11px) rotate(-32deg)' : 'translate(-3px, -3px) rotate(24deg)', offset: 0.65 },
-        { transform: 'translate(0, 0) rotate(0deg)' },
-      ], timing),
-      surprise.current.animate([
-        { opacity: 0 }, { opacity: 0.8, offset: 0.2 },
-        { opacity: 0.8, offset: 0.7 }, { opacity: 0 },
-      ], timing),
-    ];
-    const cancel = () => animations.forEach((animation) => animation.cancel());
-    const onPreferenceChange = () => { if (reduced.matches) cancel(); };
+    // The bird keeps its old palette until the cloth completely covers it.
+    const animation = cloth.current.animate([
+      { opacity: 0, transform: 'translate(12px, 44px) scale(0.08, 0.12)' },
+      { opacity: 1, transform: 'translate(0, 20px) scale(0.65, 0.7)', offset: 0.12 },
+      { opacity: 1, transform: 'translate(0, 0) scale(1)', offset: 0.28 },
+      { opacity: 1, transform: 'translate(0, 0) scale(1)', offset: 0.58 },
+      { opacity: 1, transform: 'translate(8px, 30px) scale(0.8, 0.45)', offset: 0.82 },
+      { opacity: 0, transform: 'translate(12px, 44px) scale(0.08, 0.12)' },
+    ], { duration: 1600, easing: 'ease-in-out' });
+    const reveal = window.setTimeout(() => setBirdTheme(theme), 600);
+    const onPreferenceChange = () => {
+      if (reduced.matches) {
+        window.clearTimeout(reveal);
+        animation.cancel();
+        setBirdTheme(theme);
+      }
+    };
     reduced.addEventListener('change', onPreferenceChange);
     return () => {
-      cancel();
+      window.clearTimeout(reveal);
+      animation.cancel();
       reduced.removeEventListener('change', onPreferenceChange);
     };
   }, [theme, themeChangeId]);
 
   return (
-    <svg ref={portrait} viewBox="0 0 88 88" fill="none" aria-hidden="true" className="trail-bird">
+    <svg data-bird-theme={birdTheme} viewBox="0 0 88 88" fill="none" aria-hidden="true" className="trail-bird">
       <g stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path className="bird-ground" d="M15 77c17-2 37-1 56 0" opacity=".25" />
         <path d="m37 68-2 8m3-1-7 1m20-8 2 8m-2-1 7 1" />
@@ -83,20 +73,23 @@ function Bird({ perch }: { perch: Perch }) {
           <path d="m42 16-4-7m8 7 2-9m3 10 6-6" />
           <path d="m65 35 10 5-11 4" fill="var(--accent)" />
           <g className="bird-eyes">
-            <g ref={eyes} className="bird-theme-eyes">
               <circle cx="43" cy="32" r="2.1" fill="currentColor" stroke="none" />
               <circle cx="57" cy="32" r="2.1" fill="currentColor" stroke="none" />
-            </g>
           </g>
-          <g ref={surprise} className="bird-surprise"><path d="m69 21 5-3m-7-3 2-5" stroke="var(--accent)" /></g>
           <path d="M47 39q4 3 7 0" opacity=".65" />
-          <g ref={wing} className="bird-theme-wing"><path className="bird-wing" d="M32 44c-3 13 8 16 16 9-6 1-11-3-16-9Z" fill="var(--background)" /></g>
+          <path className="bird-wing" d="M32 44c-3 13 8 16 16 9-6 1-11-3-16-9Z" fill="var(--background)" />
           {perch === 'work' && <g className="bird-prop"><g className="bird-tool"><circle cx="60" cy="48" r="8" fill="var(--background)" /><path d="m66 54 7 9" /><circle cx="60" cy="48" r="4.5" stroke="var(--accent)" opacity=".6" /></g></g>}
           {perch === 'photos' && <g className="bird-prop"><g className="bird-tool"><path d="m43 51 4-5h12l3 5h6v15H42V51Z" fill="var(--background)" /><circle cx="55" cy="58" r="5" stroke="var(--accent)" /><path d="M63 54h1" /><path className="bird-shutter" d="m69 43 3-3m-7 1v-4m7 10h4" stroke="var(--accent)" /></g></g>}
           {perch === 'notes' && <g className="bird-prop"><g className="bird-tool"><path d="M42 50q8-3 13 1 6-4 14-1v17q-8-3-14 1-5-4-13-1Z" fill="var(--background)" /><path d="M55 51v17m-9-13 5 1m8 0 6-1m-19 5 5 1m8 0 6-1" opacity=".6" /></g></g>}
           {(perch === 'map' || perch === 'hello') && <g className="bird-prop"><g className="bird-tool"><path d="m41 50 9-3 9 3 10-3v20l-10 3-9-3-9 3Z" fill="var(--background)" /><path d="M50 47v20m9-17v20" opacity=".4" /><path className="bird-map-route" d="m45 62 7-8 6 9 7-8" stroke="var(--accent)" strokeDasharray="2 3" /><circle cx="65" cy="55" r="2" fill="var(--accent)" stroke="none" /></g></g>}
           {perch === 'contact' && <g className="bird-prop"><g className="bird-tool"><path d="M43 49h26v17H43Z" fill="var(--background)" /><path d="m43 49 13 10 13-10" stroke="var(--accent)" /></g></g>}
         </g>
+      </g>
+      <g ref={cloth} className="bird-cloth" stroke="#866e98" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 6Q24 1 42 6T79 5L81 75Q72 82 62 77T43 79T24 77T7 78Z" fill="#dbcce8" />
+        <path d="M23 9Q18 35 23 72M42 10Q48 37 42 73M64 9Q58 39 66 72" opacity=".35" />
+        <path d="m45 30 2 7 7 2-7 2-2 7-2-7-7-2 7-2Z" fill="#fff9ed" stroke="none" />
+        <path d="M12 72q8-3 13 1t17 0 18 0 16-1" strokeDasharray="2 3" opacity=".6" />
       </g>
     </svg>
   );
