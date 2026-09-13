@@ -470,5 +470,6 @@ html {
   .bird-trick-wing { transform-origin: 33px 45px; }
   .bird-trick-flap { transform-origin: 21px 39px; }
   .bird-trick-flourish { opacity: 0; pointer-events: none; }
+  .bird-silk-shimmer { opacity: 0; pointer-events: none; }
   .bird-cloth { opacity: 0; transform-origin: 0 0; pointer-events: none; }
 }

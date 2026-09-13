@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
 
@@ -14,10 +14,14 @@ const captions: Record<Perch, string> = {
   map: 'How did we get here?',
 };
 
+const silkOutline = 'M12 3Q43 8 75 3C69 24 78 45 83 69Q72 81 57 76Q43 85 28 77Q14 82 4 72C14 48 18 26 12 3Z';
+
 function Bird({ perch }: { perch: Perch }) {
   const { theme, themeChangeId } = useTheme();
   const lastThemeChange = useRef(themeChangeId);
   const [birdTheme, setBirdTheme] = useState(theme);
+  const silkId = useId();
+  const shimmer = useRef<SVGGElement>(null);
   const cloth = useRef<SVGGElement>(null);
   const trickEyes = useRef<SVGGElement>(null);
   const trickWing = useRef<SVGGElement>(null);
@@ -28,13 +32,13 @@ function Bird({ perch }: { perch: Perch }) {
     const deliberate = lastThemeChange.current !== themeChangeId;
     lastThemeChange.current = themeChangeId;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!deliberate || reduced.matches || !cloth.current?.animate || !trickEyes.current || !trickWing.current || !trickFlap.current || !flourish.current) {
+    if (!deliberate || reduced.matches || !cloth.current?.animate || !trickEyes.current || !trickWing.current || !trickFlap.current || !flourish.current || !shimmer.current) {
       setBirdTheme(theme);
       return;
     }
 
     // Reach, retrieve, cover, reveal, and tuck away share one finite timeline.
-    const timing = { duration: 2600, easing: 'ease-in-out' };
+    const timing = { duration: 1700, easing: 'ease-in-out' };
     const animations = [
       trickEyes.current.animate([
         { transform: 'scale(1)' },
@@ -69,13 +73,20 @@ function Bird({ perch }: { perch: Perch }) {
         { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)', offset: 0.92 },
         { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)' },
       ], timing),
+      shimmer.current.animate([
+        { opacity: 0, transform: 'translateX(-70px)' },
+        { opacity: 0, transform: 'translateX(-70px)', offset: 0.38 },
+        { opacity: 0.45, transform: 'translateX(0px)', offset: 0.5 },
+        { opacity: 0, transform: 'translateX(100px)', offset: 0.68 },
+        { opacity: 0, transform: 'translateX(100px)' },
+      ], timing),
       flourish.current.animate([
         { opacity: 0 }, { opacity: 0, offset: 0.72 },
         { opacity: 1, offset: 0.8 }, { opacity: 0 },
       ], timing),
     ];
     const cancel = () => animations.forEach((animation) => animation.cancel());
-    const reveal = window.setTimeout(() => setBirdTheme(theme), 1350);
+    const reveal = window.setTimeout(() => setBirdTheme(theme), 850);
     const onPreferenceChange = () => {
       if (reduced.matches) {
         window.clearTimeout(reveal);
@@ -93,6 +104,14 @@ function Bird({ perch }: { perch: Perch }) {
 
   return (
     <svg data-bird-theme={birdTheme} viewBox="0 0 88 88" fill="none" aria-hidden="true" className="trail-bird">
+      <defs>
+        <clipPath id={`${silkId}-clip`}><path d={silkOutline} /></clipPath>
+        <linearGradient id={`${silkId}-shine`}>
+          <stop offset="0" stopColor="var(--text-title)" stopOpacity="0" />
+          <stop offset=".5" stopColor="var(--text-title)" stopOpacity=".7" />
+          <stop offset="1" stopColor="var(--text-title)" stopOpacity="0" />
+        </linearGradient>
+      </defs>
       <g stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path className="bird-ground" d="M15 77c17-2 37-1 56 0" opacity=".25" />
         <path d="m37 68-2 8m3-1-7 1m20-8 2 8m-2-1 7 1" />
@@ -123,10 +142,15 @@ function Bird({ perch }: { perch: Perch }) {
         </g>
       </g>
       <g ref={cloth} className="bird-cloth" stroke="var(--text-body)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 3Q43 8 75 3C69 24 78 45 83 69Q72 81 57 76Q43 85 28 77Q14 82 4 72C14 48 18 26 12 3Z" fill="var(--surface)" />
+        <path d={silkOutline} fill="var(--surface)" />
         <path d="M12 3C23 27 14 52 11 71Q18 75 28 77C24 55 30 29 12 3ZM75 3C56 29 65 55 57 76Q70 78 76 70C67 45 69 25 75 3Z" fill="var(--text-body)" fillOpacity=".09" stroke="none" />
         <path d="M15 9Q28 39 24 67M72 9Q57 39 61 65" opacity=".22" />
         <path d="M9 71Q19 77 29 73Q43 81 56 72Q70 78 78 68" opacity=".4" />
+        <g clipPath={`url(#${silkId}-clip)`} stroke="none">
+          <g ref={shimmer} className="bird-silk-shimmer">
+            <path d="M0 0h22l30 88H30Z" fill={`url(#${silkId}-shine)`} />
+          </g>
+        </g>
         <path d="m9 5 3-3 4 4m56 0 3-4 4 3" stroke="var(--text-title)" strokeWidth="2.5" />
       </g>
       <g ref={flourish} className="bird-trick-flourish" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round">
