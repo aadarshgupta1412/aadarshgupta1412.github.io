@@ -8,9 +8,9 @@ import Link from 'next/link';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[calc(100svh-3.5rem)] lg:min-h-svh flex items-center py-12 lg:py-0">
+    <section className="relative flex items-center pt-16 pb-14 md:pt-24 md:pb-20">
       <div className="relative z-10 w-full max-w-[1080px] 2xl:max-w-[1180px] mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(220px,280px)] gap-10 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(180px,220px)] gap-10 lg:gap-16 items-center">
           <div>
             <motion.h1
               className="font-display text-[2.75rem] sm:text-6xl md:text-7xl xl:text-[5.25rem] font-extrabold tracking-[-0.045em] leading-[0.95] text-[var(--text-title)] mb-5"
@@ -73,7 +73,7 @@ export function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            <Link href="/photography/" className="group block relative w-48 sm:w-56 lg:w-[240px]" aria-label="Captures">
+            <Link href="/photography/" className="group block relative w-40 sm:w-44 lg:w-[200px]" aria-label="View my photography">
               <div className="absolute -inset-3 rounded-full bg-[var(--accent)]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative aspect-square rounded-full overflow-hidden border border-[var(--border)] ring-1 ring-[var(--accent)]/20">
                 <img
@@ -83,7 +83,7 @@ export function HeroSection() {
                 />
               </div>
               <span className="mt-3 block text-center text-xs tracking-widest uppercase text-[var(--text-light)]">
-                Captures →
+                My photography →
               </span>
             </Link>
           </motion.div>
