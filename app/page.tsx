@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TrailCompanion, CompanionPerch } from '@/components/TrailCompanion';
 import { HeroSection } from '@/components/HeroSection';
 import { SelectedWork } from '@/components/SelectedWork';
 import { Container } from '@/components/Container';
@@ -9,13 +10,14 @@ const photographs = ['confluence', 'kuari-night'].map((id) => PHOTOGRAPHY.find((
 export default function Home() {
   return (
     <div>
+      <TrailCompanion />
       <HeroSection />
 
-      <section className="pb-16 md:pb-24" aria-labelledby="work-title">
+      <section className="pb-16 md:pb-24" data-bird-perch="work" aria-labelledby="work-title">
         <Container>
           <div className="flex items-end justify-between gap-4 mb-8">
             <div>
-              <p className="section-kicker">Selected work</p>
+              <div className="bird-heading"><p className="section-kicker">Selected work</p><CompanionPerch perch="work" /></div>
               <h2 id="work-title" className="section-title mb-0">Questions I’ve worked on</h2>
             </div>
             <Link href="/projects/" className="text-sm text-[var(--accent)] shrink-0 quiet-link">All work →</Link>
@@ -25,9 +27,9 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-14 md:py-20 bg-[var(--background-light)]" aria-labelledby="photos-title">
+      <section className="py-14 md:py-20 bg-[var(--background-light)]" data-bird-perch="photos" aria-labelledby="photos-title">
         <Container>
-          <p className="section-kicker">Away from the screen</p>
+          <div className="bird-heading"><p className="section-kicker">Away from the screen</p><CompanionPerch perch="photos" /></div>
           <div className="flex items-end justify-between gap-4 mb-8">
             <div>
               <h2 id="photos-title" className="section-title mb-3">A camera on the trail</h2>
@@ -51,9 +53,9 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-16 md:py-24" aria-labelledby="notes-title">
+      <section className="py-16 md:py-24" data-bird-perch="notes" aria-labelledby="notes-title">
         <Container>
-          <p className="section-kicker">Notes</p>
+          <div className="bird-heading"><p className="section-kicker">Notes</p><CompanionPerch perch="notes" /></div>
           <h2 id="notes-title" className="section-title">From the work</h2>
           <ul className="divide-y divide-[var(--border)] border-t border-[var(--border)]">
             {BLOG_POSTS.map((post) => (
@@ -72,10 +74,11 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="pb-16 md:pb-24" aria-labelledby="contact-title">
+      <section className="pb-16 md:pb-24" data-bird-perch="contact" aria-labelledby="contact-title">
         <Container>
           <div className="border-t border-[var(--border)] pt-9 flex flex-wrap items-center justify-between gap-5">
             <div>
+              <CompanionPerch perch="contact" />
               <h2 id="contact-title" className="text-2xl mb-2">Have something in mind?</h2>
               <p>Agents, research, or a good trail.</p>
             </div>

@@ -23,3 +23,11 @@ Reduced motion disables the photo/arrow transforms and note animation; selected 
 Run the existing production build and TypeScript check. In the browser, verify pointer selection, vertical keyboard navigation including wrapping and Home/End, panel relationships, stable section height, rapid reversal, touch-width layout, and desktop photo hover/reset. Inspect the reduced-motion rules for each new animated element. Check light/dark themes and mobile navigation.
 
 Verified on the production export: build and TypeScript checks passed; desktop pointer selection and Up/Down, Home/End, wraparound, rapid reversal, and Tab-to-panel behavior passed. The first project row stayed 340.75px high across different selections. Width checks at 390px and 320px found no page or tab overflow; mobile menu opening/closing and both themes passed. Browser console reported no errors. Reduced-motion handling was inspected in source; OS-level reduced-motion and physical touch hardware were not emulated.
+
+## Trail companion
+
+A custom inline SVG bird adds a personal character without a raster/video dependency. On screens at least 1280px wide it lives in the spare right margin. Its eyes follow the pointer within a two-pixel range and its perch travels at most 160px with page progress. Section position selects a magnifying glass, camera, book, or envelope. Below that breakpoint the same character occupies normal layout space beside section headings, so it never floats over mobile content.
+
+Click or Enter triggers a single 650ms wing flap/nod and a short status greeting. There is no idle animation. A single pending requestAnimationFrame batches scroll, resize, and pointer input; no self-scheduling animation loop runs. Hidden pages skip calculation. Listeners and pending frames/timers are cleaned up on unmount. Reduced motion disables gaze, travel, hover rotation, and the greeting animation; the button still displays text. Display size is 60px with a keyboard focus outline.
+
+Companion validation: production build passed; desktop greeting, scroll-derived camera/contact poses, gaze variables, keyboard greeting, and mobile in-flow perches checked. 320px and 390px layouts remained within viewport bounds, including the greeting bubble. Both themes checked. No console errors. Reduced-motion behavior inspected in source, without changing the user's system preference.

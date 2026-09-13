@@ -357,3 +357,51 @@ html {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* A little notebook bird. Its mobile perches occupy real layout space. */
+@layer components {
+  .bird-rail { display: none; }
+  .bird-heading { display: flex; align-items: center; gap: 12px; }
+  .bird-heading .section-kicker { margin-bottom: 0; }
+  .bird-heading { margin-bottom: 12px; }
+  .bird-perch { position: relative; width: 60px; }
+  .bird-button { display: block; width: 60px; height: 60px; border-radius: 50%; color: var(--primary); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .trail-bird { display: block; width: 100%; height: 100%; overflow: visible; }
+  .bird-button > span { display: block; }
+  .bird-body { transform-origin: 45px 69px; transition: transform 240ms ease-out; }
+  .bird-eyes { transform: translate(var(--bird-eye-x, 0px), var(--bird-eye-y, 0px)); transition: transform 180ms ease-out; }
+  .bird-wing { transform-origin: 33px 45px; }
+  .bird-button:hover .bird-body,
+  .bird-button:focus-visible .bird-body { transform: rotate(-5deg); }
+  .bird-greeting .bird-wing { animation: bird-wave 650ms ease-in-out; }
+  .bird-greeting .bird-body { animation: bird-nod 650ms ease-in-out; }
+  .bird-caption { position: absolute; z-index: 1; left: 0; bottom: calc(100% + 4px); width: max-content; max-width: 180px; font-size: 11px; line-height: 1.4; padding: 6px 9px; border: 1px solid var(--border); border-radius: 8px; color: var(--text-body); background: var(--background-light); pointer-events: none; opacity: 0; transition: opacity 180ms ease-out; }
+  .bird-caption[data-speaking='true'] { opacity: 1; }
+  .bird-heading .bird-caption { left: auto; right: 0; }
+
+  @media (min-width: 1280px) {
+    .bird-inline { display: none; }
+    .bird-rail { display: block; position: fixed; z-index: 30; top: 34%; right: 8px; transform: translateY(var(--bird-travel, 0px)); transition: transform 450ms cubic-bezier(.22, 1, .36, 1); }
+    .bird-rail .bird-caption { left: auto; right: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bird-rail,
+    .bird-eyes,
+    .bird-button:hover .bird-body,
+    .bird-button:focus-visible .bird-body { transform: none; }
+    .bird-greeting .bird-wing,
+    .bird-greeting .bird-body { animation: none; }
+  }
+}
+
+@keyframes bird-wave {
+  0%, 100% { transform: rotate(0); }
+  25%, 65% { transform: rotate(-35deg); }
+  45%, 85% { transform: rotate(-10deg); }
+}
+@keyframes bird-nod {
+  0%, 100% { transform: rotate(0); }
+  35% { transform: rotate(-7deg); }
+  70% { transform: rotate(3deg); }
+}
