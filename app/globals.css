@@ -229,3 +229,131 @@ html {
     .blog-mark-dot { animation: none; opacity: 1; }
   }
 }
+
+/* User-driven motion: nothing advances while the reader is idle. */
+@layer components {
+  .quiet-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 220ms ease-out, color 160ms ease-out;
+    padding-bottom: 2px;
+  }
+
+  .quiet-link:hover,
+  .quiet-link:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  .work-steps {
+    border-left: 1px solid var(--border);
+  }
+
+  .work-step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    width: 100%;
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 14px;
+    color: var(--text-body);
+    transition: background-color 180ms ease-out, color 180ms ease-out;
+  }
+
+  .work-step::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 220ms ease-out;
+  }
+
+  .work-step[aria-selected='true'] {
+    color: var(--primary);
+    background: color-mix(in oklab, var(--accent) 7%, transparent);
+  }
+
+  .work-step[aria-selected='true']::before {
+    transform: scaleY(1);
+  }
+
+  .work-step:hover,
+  .work-step:focus-visible {
+    color: var(--primary);
+    background: color-mix(in oklab, var(--accent) 7%, transparent);
+  }
+
+  .work-step-number {
+    font-family: var(--font-mono), monospace;
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  .work-step-arrow {
+    margin-left: auto;
+    opacity: 0;
+    transform: translateX(-3px);
+    transition: opacity 180ms ease-out, transform 220ms ease-out;
+  }
+
+  .work-step[aria-selected='true'] .work-step-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .work-step-note[aria-hidden='false'] {
+    animation: note-appear 200ms ease-out;
+  }
+
+  .photo-print {
+    transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 350ms ease-out;
+  }
+
+  .photo-print:focus-visible {
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+  }
+
+  .note-arrow {
+    transition: transform 220ms ease-out;
+  }
+
+  .note-link:focus-visible .note-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .photo-print:hover {
+      transform: rotate(-0.6deg) scale(1.008);
+      box-shadow: 0 10px 28px rgb(0 0 0 / 0.14);
+    }
+
+    .note-link:hover .note-arrow {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo-print:hover,
+    .note-link .note-arrow,
+    .work-step-arrow {
+      transform: none;
+    }
+
+    .work-step-note[aria-hidden='false'] {
+      animation: none;
+    }
+  }
+}
+
+@keyframes note-appear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
