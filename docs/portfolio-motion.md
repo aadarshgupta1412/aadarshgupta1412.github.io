@@ -33,3 +33,9 @@ The companion lives in ClientLayout and persists across navigation. Each route (
 Validation: production build and TypeScript checks passed. Browser checks confirmed exactly one bird at mobile width, downward gaze of +2.5px and upward gaze of -2.5px, and changing scroll travel. At 320px the content ends at x=272 and the bird's reserved margin starts there, with no horizontal overflow; 390px also passed. Desktop/mobile greetings, keyboard activation, section poses, and both themes were checked during this PR. Reduced-motion behavior was inspected in source without changing system preferences.
 
 Backpack validation: production build and TypeScript passed. Navigated through Work, About, Vitae, Notes, Photo, and Contact: correct tool and exactly one bird. Direct loads at 320px across those routes showed no horizontal overflow. Inspected the open-pack pose and final camera/envelope poses, plus the narrow contact layout. Browser console had no errors.
+
+## Theme-switch reaction
+
+A deliberate theme toggle triggers a 1.8s bird reaction: light mode squints its eyes and lifts a wing toward its face; dark mode widens its eyes and startles its wing. The bird briefly grows to 2.2 times its usual size, anchored to the right edge, and holds its expression before settling back. Two surprise strokes appear. The page keeps its existing theme-switch timing. Nested SVG groups compose the reaction with gaze and backpack motion. Initial theme hydration does not trigger it. Rapid toggles cancel the previous reaction; unmount and enabling reduced motion cancel active animations. Reduced motion skips the reaction entirely.
+
+Validation: production build, TypeScript, and diff checks passed. Local browser checks covered both theme reactions and repeated toggles; no console errors were reported. Reduced-motion cancellation was inspected in source.
