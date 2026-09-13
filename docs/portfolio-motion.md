@@ -34,12 +34,8 @@ Validation: production build and TypeScript checks passed. Browser checks confir
 
 Backpack validation: production build and TypeScript passed. Navigated through Work, About, Vitae, Notes, Photo, and Contact: correct tool and exactly one bird. Direct loads at 320px across those routes showed no horizontal overflow. Inspected the open-pack pose and final camera/envelope poses, plus the narrow contact layout. Browser console had no errors.
 
-## Theme-switch cloth reveal
+## Theme-switch wand trick
 
-A deliberate theme toggle plays a 2.6s magician sequence at the bird's normal size. A brief wide-eyed double take precedes the trick. The wing reaches into the backpack as its flap opens, retrieves a folded cloth in the site’s surface and text colours, lifts it over the bird, then tucks it back into the pack. Two small sparkle strokes mark the reveal. The bird retains its previous palette until 1350ms, while fully covered; the rest of the page switches normally. The bird stays at its normal size throughout.
+A 1.5s sequence starts with a slight double take. The bird reaches into its backpack, lifts a small wand, and traces an accent-coloured circle around itself. Its palette changes at 900ms as the circle closes; the circle and two sparkles fade as the wand is pocketed. The bird stays at its normal size, with no cloth or overlay covering it. The page switches theme normally.
 
-Initial hydration updates without playing. Repeated toggles cancel the previous animation and palette timer. Unmount cleans up both; reduced motion skips the reveal, and enabling it mid-animation immediately applies the current theme.
-
-Validation: production build, TypeScript, and diff checks passed. Browser checks confirmed the cloth appears in both directions, the old bird palette remains visible during unfolding, and the bird returns at its original size. No console errors. Reduced-motion handling inspected in source.
-
-Cloth styling uses existing `--surface` and `--text-body` tokens, pinched corners, curved shaded folds, and a flowing scalloped hem. No separate lavender palette, star motif, or decorative stitching.
+Animations and palette timer cancel on repeated toggles and unmount. Reduced motion skips the effect or immediately finishes an active one. Initial theme hydration does not play it.

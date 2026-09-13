@@ -23,7 +23,7 @@ export const PERSONAL_INFO = {
 export const STORY = {
   intro: [
     'I build systems that help people understand what AI agents did, where they failed, and why.',
-    'Previously, production agents at Thena and sleep EEG research at IIT Delhi. Away from the screen, I take a camera on treks.',
+    'Previously, production agents at Thena and sleep EEG research at IIT Delhi. Away from the screen, I take my camera on treks.',
   ],
   about: [
     'At Neatlogs I build the systems that sit on top of agent traces. That means a detection pipeline (a QLoRA-finetuned LLaMA 3.1 model on about 16K labeled samples, 0.83–0.91 F1, served on Azure ML and SageMaker), hybrid BM25 + vector search on ClickHouse, and agents that can walk a trace and draft an eval from context.',

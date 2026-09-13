@@ -18,7 +18,8 @@ function Bird({ perch }: { perch: Perch }) {
   const { theme, themeChangeId } = useTheme();
   const lastThemeChange = useRef(themeChangeId);
   const [birdTheme, setBirdTheme] = useState(theme);
-  const cloth = useRef<SVGGElement>(null);
+  const spell = useRef<SVGCircleElement>(null);
+  const wand = useRef<SVGGElement>(null);
   const trickEyes = useRef<SVGGElement>(null);
   const trickWing = useRef<SVGGElement>(null);
   const trickFlap = useRef<SVGGElement>(null);
@@ -28,13 +29,13 @@ function Bird({ perch }: { perch: Perch }) {
     const deliberate = lastThemeChange.current !== themeChangeId;
     lastThemeChange.current = themeChangeId;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!deliberate || reduced.matches || !cloth.current?.animate || !trickEyes.current || !trickWing.current || !trickFlap.current || !flourish.current) {
+    if (!deliberate || reduced.matches || !wand.current?.animate || !trickEyes.current || !trickWing.current || !trickFlap.current || !flourish.current || !spell.current) {
       setBirdTheme(theme);
       return;
     }
 
-    // Reach, retrieve, cover, reveal, and tuck away share one finite timeline.
-    const timing = { duration: 2600, easing: 'ease-in-out' };
+    // A quick double take, then a wand flourish and a single drawn spell.
+    const timing = { duration: 1500, easing: 'ease-in-out' };
     const animations = [
       trickEyes.current.animate([
         { transform: 'scale(1)' },
@@ -59,23 +60,29 @@ function Bird({ perch }: { perch: Perch }) {
         { transform: 'scaleY(-0.9)', offset: 0.88 },
         { transform: 'scaleY(1)' },
       ], timing),
-      cloth.current.animate([
-        { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)' },
-        { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)', offset: 0.14 },
-        { opacity: 1, transform: 'translate(12px, 21px) scale(0.25, 0.4)', offset: 0.24 },
-        { opacity: 1, transform: 'translate(0, 0) scale(1)', offset: 0.42 },
-        { opacity: 1, transform: 'translate(0, 0) scale(1)', offset: 0.62 },
-        { opacity: 1, transform: 'translate(0, 27px) scale(0.45, 0.3)', offset: 0.8 },
-        { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)', offset: 0.92 },
-        { opacity: 0, transform: 'translate(16px, 36px) scale(0.08, 0.12)' },
+      wand.current.animate([
+        { opacity: 0, transform: 'translate(-13px, 3px) rotate(-65deg)' },
+        { opacity: 0, transform: 'translate(-13px, 3px) rotate(-65deg)', offset: 0.12 },
+        { opacity: 1, transform: 'translate(-6px, -4px) rotate(-30deg)', offset: 0.25 },
+        { opacity: 1, transform: 'rotate(15deg)', offset: 0.4 },
+        { opacity: 1, transform: 'rotate(-20deg)', offset: 0.65 },
+        { opacity: 1, transform: 'translate(-6px, -4px) rotate(-30deg)', offset: 0.8 },
+        { opacity: 0, transform: 'translate(-13px, 3px) rotate(-65deg)' },
+      ], timing),
+      spell.current.animate([
+        { opacity: 0, strokeDashoffset: 240 },
+        { opacity: 0, strokeDashoffset: 240, offset: 0.28 },
+        { opacity: 0.8, strokeDashoffset: 0, offset: 0.6 },
+        { opacity: 0.5, strokeDashoffset: 0, offset: 0.7 },
+        { opacity: 0, strokeDashoffset: 0 },
       ], timing),
       flourish.current.animate([
-        { opacity: 0 }, { opacity: 0, offset: 0.72 },
-        { opacity: 1, offset: 0.8 }, { opacity: 0 },
+        { opacity: 0 }, { opacity: 0, offset: 0.56 },
+        { opacity: 1, offset: 0.64 }, { opacity: 0 },
       ], timing),
     ];
     const cancel = () => animations.forEach((animation) => animation.cancel());
-    const reveal = window.setTimeout(() => setBirdTheme(theme), 1350);
+    const reveal = window.setTimeout(() => setBirdTheme(theme), 900);
     const onPreferenceChange = () => {
       if (reduced.matches) {
         window.clearTimeout(reveal);
@@ -122,12 +129,11 @@ function Bird({ perch }: { perch: Perch }) {
           {perch === 'contact' && <g className="bird-prop"><g className="bird-tool"><path d="M43 49h26v17H43Z" fill="var(--background)" /><path d="m43 49 13 10 13-10" stroke="var(--accent)" /></g></g>}
         </g>
       </g>
-      <g ref={cloth} className="bird-cloth" stroke="var(--text-body)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 3Q43 8 75 3C69 24 78 45 83 69Q72 81 57 76Q43 85 28 77Q14 82 4 72C14 48 18 26 12 3Z" fill="var(--surface)" />
-        <path d="M12 3C23 27 14 52 11 71Q18 75 28 77C24 55 30 29 12 3ZM75 3C56 29 65 55 57 76Q70 78 76 70C67 45 69 25 75 3Z" fill="var(--text-body)" fillOpacity=".09" stroke="none" />
-        <path d="M15 9Q28 39 24 67M72 9Q57 39 61 65" opacity=".22" />
-        <path d="M9 71Q19 77 29 73Q43 81 56 72Q70 78 78 68" opacity=".4" />
-        <path d="m9 5 3-3 4 4m56 0 3-4 4 3" stroke="var(--text-title)" strokeWidth="2.5" />
+      <circle ref={spell} className="bird-spell" cx="44" cy="42" r="38" stroke="var(--primary)" strokeWidth="1.6" strokeLinecap="round" strokeDasharray="240" transform="rotate(-90 44 42)" />
+      <g ref={wand} className="bird-wand" strokeLinecap="round">
+        <path d="m32 44 14-27" stroke="var(--text-title)" strokeWidth="3" />
+        <path d="m43 23 3-6" stroke="var(--primary)" strokeWidth="3" />
+        <path d="m30 44 4 2" stroke="currentColor" strokeWidth="3" />
       </g>
       <g ref={flourish} className="bird-trick-flourish" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round">
         <path d="M73 17v8m-4-4h8M13 21v6m-3-3h6" />
