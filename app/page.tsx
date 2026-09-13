@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { TrailCompanion } from '@/components/TrailCompanion';
 import { HeroSection } from '@/components/HeroSection';
 import { SelectedWork } from '@/components/SelectedWork';
 import { Container } from '@/components/Container';
@@ -9,8 +8,7 @@ const photographs = ['confluence', 'kuari-night'].map((id) => PHOTOGRAPHY.find((
 
 export default function Home() {
   return (
-    <div className="pr-12 xl:pr-0">
-      <TrailCompanion />
+    <div>
       <HeroSection />
 
       <section className="pb-16 md:pb-24" data-bird-perch="work" aria-labelledby="work-title">

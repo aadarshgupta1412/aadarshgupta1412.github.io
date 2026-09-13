@@ -370,8 +370,6 @@ html {
   .bird-wing { transform-origin: 33px 45px; }
   .bird-button:hover .bird-body,
   .bird-button:focus-visible .bird-body { transform: rotate(-5deg); }
-  .bird-greeting .bird-wing { animation: bird-wave 650ms ease-in-out; }
-  .bird-greeting .bird-body { animation: bird-nod 650ms ease-in-out; }
   .bird-caption { position: absolute; z-index: 1; left: 0; bottom: calc(100% + 4px); width: max-content; max-width: 180px; font-size: 11px; line-height: 1.4; padding: 6px 9px; border: 1px solid var(--border); border-radius: 8px; color: var(--text-body); background: var(--background-light); pointer-events: none; opacity: 0; transition: opacity 180ms ease-out; }
   .bird-caption[data-speaking='true'] { opacity: 1; }
   .bird-rail .bird-caption { left: auto; right: 0; }
@@ -388,18 +386,68 @@ html {
     .bird-eyes,
     .bird-button:hover .bird-body,
     .bird-button:focus-visible .bird-body { transform: none; }
-    .bird-greeting .bird-wing,
-    .bird-greeting .bird-body { animation: none; }
   }
 }
 
-@keyframes bird-wave {
-  0%, 100% { transform: rotate(0); }
-  25%, 65% { transform: rotate(-35deg); }
-  45%, 85% { transform: rotate(-10deg); }
+/* Backpack choreography: reach, open, retrieve, then use the chosen tool once. */
+@layer components {
+  .bird-prop { transform-origin: 55px 57px; }
+  .bird-pack-flap { transform-origin: 14px 39px; }
+  .bird-action .bird-pack-flap { animation: bird-open-pack 1000ms ease-in-out both; }
+  .bird-action .bird-wing { animation: bird-reach 1000ms ease-in-out both; }
+  .bird-action .bird-prop { animation: bird-unpack 1000ms cubic-bezier(.22, 1, .36, 1) both; }
+  .bird-action .bird-body { animation: bird-rummage 1000ms ease-in-out; }
+  .bird-tool { transform-origin: 55px 57px; }
+  .bird-action[data-tool='work'] .bird-tool { animation: bird-inspect 850ms 1000ms ease-in-out; }
+  .bird-action[data-tool='notes'] .bird-tool { animation: bird-read 850ms 1000ms ease-in-out; }
+  .bird-action[data-tool='map'] .bird-tool,
+  .bird-action[data-tool='hello'] .bird-tool { animation: bird-read 850ms 1000ms ease-in-out; }
+  .bird-action[data-tool='contact'] .bird-tool { animation: bird-offer 850ms 1000ms ease-in-out; }
+  .bird-shutter { opacity: 0; animation: bird-snap 600ms 1100ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    .bird-action .bird-pack-flap,
+    .bird-action .bird-wing,
+    .bird-action .bird-prop,
+    .bird-action .bird-body,
+    .bird-action .bird-tool,
+    .bird-shutter { animation: none; }
+  }
 }
-@keyframes bird-nod {
+@keyframes bird-open-pack {
+  0%, 15%, 80%, 100% { transform: rotate(0); }
+  30%, 65% { transform: rotate(-65deg); }
+}
+@keyframes bird-reach {
   0%, 100% { transform: rotate(0); }
-  35% { transform: rotate(-7deg); }
-  70% { transform: rotate(3deg); }
+  25%, 45% { transform: rotate(105deg); }
+  70% { transform: rotate(-15deg); }
+}
+@keyframes bird-rummage {
+  0%, 100% { transform: rotate(0); }
+  30%, 50% { transform: rotate(-9deg); }
+  75% { transform: rotate(3deg); }
+}
+@keyframes bird-unpack {
+  0%, 40% { opacity: 0; transform: translate(-32px, -10px) scale(.25); }
+  55% { opacity: 1; transform: translate(-23px, -22px) scale(.6); }
+  78% { opacity: 1; transform: translate(0, -7px) scale(1); }
+  100% { opacity: 1; transform: translate(0, 0) scale(1); }
+}
+@keyframes bird-inspect {
+  0%, 100% { transform: translate(0, 0); }
+  35% { transform: translate(-6px, -9px); }
+  65% { transform: translate(1px, -9px); }
+}
+@keyframes bird-read {
+  0%, 100% { transform: rotate(0); }
+  35% { transform: rotate(-7deg) scaleX(.9); }
+  70% { transform: rotate(4deg); }
+}
+@keyframes bird-offer {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px) rotate(-8deg); }
+}
+@keyframes bird-snap {
+  0%, 100% { opacity: 0; }
+  25%, 50% { opacity: .8; }
 }
