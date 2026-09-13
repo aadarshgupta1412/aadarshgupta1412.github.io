@@ -122,11 +122,9 @@ function Bird({ perch }: { perch: Perch }) {
           {perch === 'contact' && <g className="bird-prop"><g className="bird-tool"><path d="M43 49h26v17H43Z" fill="var(--background)" /><path d="m43 49 13 10 13-10" stroke="var(--accent)" /></g></g>}
         </g>
       </g>
-      <g ref={cloth} className="bird-cloth" stroke="#866e98" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 6Q24 1 42 6T79 5L81 75Q72 82 62 77T43 79T24 77T7 78Z" fill="#dbcce8" />
-        <path d="M23 9Q18 35 23 72M42 10Q48 37 42 73M64 9Q58 39 66 72" opacity=".35" />
-        <path d="m45 30 2 7 7 2-7 2-2 7-2-7-7-2 7-2Z" fill="#fff9ed" stroke="none" />
-        <path d="M12 72q8-3 13 1t17 0 18 0 16-1" strokeDasharray="2 3" opacity=".6" />
+      <g ref={cloth} className="bird-cloth" stroke="var(--text-body)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 7Q42 4 79 7L80 75Q60 79 43 76T8 77Z" fill="var(--surface)" />
+        <path d="M26 10Q22 39 26 73M61 10Q65 40 61 73" opacity=".2" />
       </g>
       <g ref={flourish} className="bird-trick-flourish" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round">
         <path d="M73 17v8m-4-4h8M13 21v6m-3-3h6" />
