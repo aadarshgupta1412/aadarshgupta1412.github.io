@@ -451,3 +451,24 @@ html {
   0%, 100% { opacity: 0; }
   25%, 50% { opacity: .8; }
 }
+
+/* The cloth hides the bird's palette swap without delaying the page theme. */
+@layer components {
+  .trail-bird[data-bird-theme='light'] {
+    --background: oklch(94.8% 0.018 78);
+    --background-light: oklch(97.2% 0.012 78);
+    --accent: oklch(44% 0.11 198);
+    color: oklch(28% 0.045 205);
+  }
+  .trail-bird[data-bird-theme='dark'] {
+    --background: oklch(16.5% 0.008 250);
+    --background-light: oklch(20.2% 0.01 250);
+    --accent: oklch(84.42% 0.14 202);
+    color: oklch(84.42% 0.14 202);
+  }
+  .bird-trick-eyes { transform-origin: 50px 32px; }
+  .bird-trick-wing { transform-origin: 33px 45px; }
+  .bird-trick-flap { transform-origin: 21px 39px; }
+  .bird-trick-flourish { opacity: 0; pointer-events: none; }
+  .bird-cloth { opacity: 0; transform-origin: 0 0; pointer-events: none; }
+}

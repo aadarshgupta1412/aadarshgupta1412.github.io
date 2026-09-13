@@ -33,3 +33,13 @@ The companion lives in ClientLayout and persists across navigation. Each route (
 Validation: production build and TypeScript checks passed. Browser checks confirmed exactly one bird at mobile width, downward gaze of +2.5px and upward gaze of -2.5px, and changing scroll travel. At 320px the content ends at x=272 and the bird's reserved margin starts there, with no horizontal overflow; 390px also passed. Desktop/mobile greetings, keyboard activation, section poses, and both themes were checked during this PR. Reduced-motion behavior was inspected in source without changing system preferences.
 
 Backpack validation: production build and TypeScript passed. Navigated through Work, About, Vitae, Notes, Photo, and Contact: correct tool and exactly one bird. Direct loads at 320px across those routes showed no horizontal overflow. Inspected the open-pack pose and final camera/envelope poses, plus the narrow contact layout. Browser console had no errors.
+
+## Theme-switch cloth reveal
+
+A deliberate theme toggle plays a 2.6s magician sequence at the bird's normal size. A brief wide-eyed double take precedes the trick. The wing reaches into the backpack as its flap opens, retrieves a folded cloth in the site’s surface and text colours, lifts it over the bird, then tucks it back into the pack. Two small sparkle strokes mark the reveal. The bird retains its previous palette until 1350ms, while fully covered; the rest of the page switches normally. The bird stays at its normal size throughout.
+
+Initial hydration updates without playing. Repeated toggles cancel the previous animation and palette timer. Unmount cleans up both; reduced motion skips the reveal, and enabling it mid-animation immediately applies the current theme.
+
+Validation: production build, TypeScript, and diff checks passed. Browser checks confirmed the cloth appears in both directions, the old bird palette remains visible during unfolding, and the bird returns at its original size. No console errors. Reduced-motion handling inspected in source.
+
+Cloth styling uses existing `--surface` and `--text-body` tokens, pinched corners, curved shaded folds, and a flowing scalloped hem. No separate lavender palette, star motif, or decorative stitching.
