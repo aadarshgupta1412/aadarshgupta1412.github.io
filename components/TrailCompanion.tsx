@@ -123,8 +123,11 @@ function Bird({ perch }: { perch: Perch }) {
         </g>
       </g>
       <g ref={cloth} className="bird-cloth" stroke="var(--text-body)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 7Q42 4 79 7L80 75Q60 79 43 76T8 77Z" fill="var(--surface)" />
-        <path d="M26 10Q22 39 26 73M61 10Q65 40 61 73" opacity=".2" />
+        <path d="M12 3Q43 8 75 3C69 24 78 45 83 69Q72 81 57 76Q43 85 28 77Q14 82 4 72C14 48 18 26 12 3Z" fill="var(--surface)" />
+        <path d="M12 3C23 27 14 52 11 71Q18 75 28 77C24 55 30 29 12 3ZM75 3C56 29 65 55 57 76Q70 78 76 70C67 45 69 25 75 3Z" fill="var(--text-body)" fillOpacity=".09" stroke="none" />
+        <path d="M15 9Q28 39 24 67M72 9Q57 39 61 65" opacity=".22" />
+        <path d="M9 71Q19 77 29 73Q43 81 56 72Q70 78 78 68" opacity=".4" />
+        <path d="m9 5 3-3 4 4m56 0 3-4 4 3" stroke="var(--text-title)" strokeWidth="2.5" />
       </g>
       <g ref={flourish} className="bird-trick-flourish" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round">
         <path d="M73 17v8m-4-4h8M13 21v6m-3-3h6" />

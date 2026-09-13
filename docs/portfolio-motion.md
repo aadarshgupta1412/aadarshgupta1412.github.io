@@ -42,4 +42,4 @@ Initial hydration updates without playing. Repeated toggles cancel the previous 
 
 Validation: production build, TypeScript, and diff checks passed. Browser checks confirmed the cloth appears in both directions, the old bird palette remains visible during unfolding, and the bird returns at its original size. No console errors. Reduced-motion handling inspected in source.
 
-Cloth styling uses existing `--surface` and `--text-body` tokens, two quiet folds, and a simple hand-drawn hem. No separate lavender palette, star motif, or decorative stitching.
+Cloth styling uses existing `--surface` and `--text-body` tokens, pinched corners, curved shaded folds, and a flowing scalloped hem. No separate lavender palette, star motif, or decorative stitching.
