@@ -358,12 +358,9 @@ html {
   to { opacity: 1; }
 }
 
-/* A little notebook bird. Its mobile perches occupy real layout space. */
+/* One notebook bird follows the reader in a reserved margin. */
 @layer components {
-  .bird-rail { display: none; }
-  .bird-heading { display: flex; align-items: center; gap: 12px; }
-  .bird-heading .section-kicker { margin-bottom: 0; }
-  .bird-heading { margin-bottom: 12px; }
+  .bird-rail { position: fixed; z-index: 30; top: 34%; right: 4px; transform: translateY(var(--bird-travel, 0px)); transition: transform 450ms cubic-bezier(.22, 1, .36, 1); }
   .bird-perch { position: relative; width: 60px; }
   .bird-button { display: block; width: 60px; height: 60px; border-radius: 50%; color: var(--primary); cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .trail-bird { display: block; width: 100%; height: 100%; overflow: visible; }
@@ -377,12 +374,13 @@ html {
   .bird-greeting .bird-body { animation: bird-nod 650ms ease-in-out; }
   .bird-caption { position: absolute; z-index: 1; left: 0; bottom: calc(100% + 4px); width: max-content; max-width: 180px; font-size: 11px; line-height: 1.4; padding: 6px 9px; border: 1px solid var(--border); border-radius: 8px; color: var(--text-body); background: var(--background-light); pointer-events: none; opacity: 0; transition: opacity 180ms ease-out; }
   .bird-caption[data-speaking='true'] { opacity: 1; }
-  .bird-heading .bird-caption { left: auto; right: 0; }
-
+  .bird-rail .bird-caption { left: auto; right: 0; }
+  @media (max-width: 1279px) {
+    .bird-perch, .bird-button { width: 44px; }
+    .bird-button { height: 44px; }
+  }
   @media (min-width: 1280px) {
-    .bird-inline { display: none; }
-    .bird-rail { display: block; position: fixed; z-index: 30; top: 34%; right: 8px; transform: translateY(var(--bird-travel, 0px)); transition: transform 450ms cubic-bezier(.22, 1, .36, 1); }
-    .bird-rail .bird-caption { left: auto; right: 0; }
+    .bird-rail { right: 8px; }
   }
 
   @media (prefers-reduced-motion: reduce) {

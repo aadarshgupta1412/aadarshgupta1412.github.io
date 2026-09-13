@@ -64,26 +64,22 @@ function BirdButton({ perch }: { perch: Perch }) {
   );
 }
 
-/** In-flow perches keep the bird clear of text on small screens. */
-export function CompanionPerch({ perch }: { perch: Perch }) {
-  return <div className="bird-inline"><BirdButton perch={perch} /></div>;
-}
-
-/** One margin companion on wide screens; only computes while input changes. */
+/** One continuous margin companion at every viewport size. */
 export function TrailCompanion() {
   const [perch, setPerch] = useState<Perch>('hello');
   const rail = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const desktop = window.matchMedia('(min-width: 1280px)');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     let frame = 0;
+    let lastScroll = window.scrollY;
+    let scrollGaze = 0;
     let pointer: { x: number; y: number } | null = null;
     const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-bird-perch]'));
 
     function update() {
       frame = 0;
-      if (!desktop.matches || document.hidden || !rail.current) return;
+      if (document.hidden || !rail.current) return;
       let current: Perch = 'hello';
       for (const section of sections) {
         if (section.getBoundingClientRect().top <= window.innerHeight * 0.5) {
@@ -93,8 +89,8 @@ export function TrailCompanion() {
       setPerch(current);
       const progress = Math.min(1, Math.max(0, window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight)));
       const y = reduced.matches ? 0 : progress * Math.min(160, window.innerHeight * 0.2);
-      let xEye = 0;
-      let yEye = 0;
+      let xEye = reduced.matches ? 0 : -1;
+      let yEye = reduced.matches ? 0 : scrollGaze;
       if (pointer && !reduced.matches) {
         const bounds = rail.current.getBoundingClientRect();
         xEye = Math.max(-2, Math.min(2, (pointer.x - bounds.left - bounds.width / 2) / 160));
@@ -103,30 +99,35 @@ export function TrailCompanion() {
       rail.current.style.cssText = `--bird-travel: ${y}px; --bird-eye-x: ${xEye}px; --bird-eye-y: ${yEye}px;`;
     }
     function schedule() { if (!frame) frame = requestAnimationFrame(update); }
+    function onScroll() {
+      const delta = window.scrollY - lastScroll;
+      lastScroll = window.scrollY;
+      if (Math.abs(delta) > 0.5) scrollGaze = delta > 0 ? 2.5 : -2.5;
+      pointer = null;
+      schedule();
+    }
     function onPointer(event: PointerEvent) {
-      if (event.pointerType !== 'mouse' || reduced.matches || !desktop.matches) return;
+      if (event.pointerType !== 'mouse' || reduced.matches) return;
       pointer = { x: event.clientX, y: event.clientY };
       schedule();
     }
     function resetPointer() { pointer = null; schedule(); }
 
     schedule();
-    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', schedule);
     window.addEventListener('pointermove', onPointer, { passive: true });
     document.documentElement.addEventListener('pointerleave', resetPointer);
     document.addEventListener('visibilitychange', schedule);
     reduced.addEventListener('change', schedule);
-    desktop.addEventListener('change', schedule);
     return () => {
       cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', schedule);
       window.removeEventListener('pointermove', onPointer);
       document.documentElement.removeEventListener('pointerleave', resetPointer);
       document.removeEventListener('visibilitychange', schedule);
       reduced.removeEventListener('change', schedule);
-      desktop.removeEventListener('change', schedule);
     };
   }, []);
 

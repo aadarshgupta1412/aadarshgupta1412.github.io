@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { TrailCompanion, CompanionPerch } from '@/components/TrailCompanion';
+import { TrailCompanion } from '@/components/TrailCompanion';
 import { HeroSection } from '@/components/HeroSection';
 import { SelectedWork } from '@/components/SelectedWork';
 import { Container } from '@/components/Container';
@@ -9,7 +9,7 @@ const photographs = ['confluence', 'kuari-night'].map((id) => PHOTOGRAPHY.find((
 
 export default function Home() {
   return (
-    <div>
+    <div className="pr-12 xl:pr-0">
       <TrailCompanion />
       <HeroSection />
 
@@ -17,7 +17,7 @@ export default function Home() {
         <Container>
           <div className="flex items-end justify-between gap-4 mb-8">
             <div>
-              <div className="bird-heading"><p className="section-kicker">Selected work</p><CompanionPerch perch="work" /></div>
+              <p className="section-kicker">Selected work</p>
               <h2 id="work-title" className="section-title mb-0">Questions I’ve worked on</h2>
             </div>
             <Link href="/projects/" className="text-sm text-[var(--accent)] shrink-0 quiet-link">All work →</Link>
@@ -29,7 +29,7 @@ export default function Home() {
 
       <section className="py-14 md:py-20 bg-[var(--background-light)]" data-bird-perch="photos" aria-labelledby="photos-title">
         <Container>
-          <div className="bird-heading"><p className="section-kicker">Away from the screen</p><CompanionPerch perch="photos" /></div>
+          <p className="section-kicker">Away from the screen</p>
           <div className="flex items-end justify-between gap-4 mb-8">
             <div>
               <h2 id="photos-title" className="section-title mb-3">A camera on the trail</h2>
@@ -55,7 +55,7 @@ export default function Home() {
 
       <section className="py-16 md:py-24" data-bird-perch="notes" aria-labelledby="notes-title">
         <Container>
-          <div className="bird-heading"><p className="section-kicker">Notes</p><CompanionPerch perch="notes" /></div>
+          <p className="section-kicker">Notes</p>
           <h2 id="notes-title" className="section-title">From the work</h2>
           <ul className="divide-y divide-[var(--border)] border-t border-[var(--border)]">
             {BLOG_POSTS.map((post) => (
@@ -78,7 +78,6 @@ export default function Home() {
         <Container>
           <div className="border-t border-[var(--border)] pt-9 flex flex-wrap items-center justify-between gap-5">
             <div>
-              <CompanionPerch perch="contact" />
               <h2 id="contact-title" className="text-2xl mb-2">Have something in mind?</h2>
               <p>Agents, research, or a good trail.</p>
             </div>
